@@ -1,0 +1,39 @@
+<h1>Listing observations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Teacher</th>
+      <th>Score</th>
+      <th>Date</th>
+      <th>Observer</th>
+      <th>Quarter</th>
+      <th>Small school</th>
+      <th>Year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @observations.each do |observation| %>
+      <tr>
+        <td><%= observation.teacher %></td>
+        <td><%= observation.score %></td>
+        <td><%= observation.date %></td>
+        <td><%= observation.observer %></td>
+        <td><%= observation.quarter %></td>
+        <td><%= observation.small_school %></td>
+        <td><%= observation.year %></td>
+        <td><%= link_to 'Show', observation %></td>
+        <td><%= link_to 'Edit', edit_observation_path(observation) %></td>
+        <td><%= link_to 'Destroy', observation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Observation', new_observation_path %>

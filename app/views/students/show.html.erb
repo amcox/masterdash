@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Student number:</strong>
+  <%= @student.student_number %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @student.name %>
+</p>
+
+<p>
+  <strong>La sped:</strong>
+  <%= @student.la_sped %>
+</p>
+
+<p>
+  <strong>Iep speech only:</strong>
+  <%= @student.iep_speech_only %>
+</p>
+
+<p>
+  <strong>State test ela:</strong>
+  <%= @student.state_test_ela %>
+</p>
+
+<p>
+  <strong>State test math:</strong>
+  <%= @student.state_test_math %>
+</p>
+
+<p>
+  <strong>State test sci:</strong>
+  <%= @student.state_test_sci %>
+</p>
+
+<p>
+  <strong>State test soc:</strong>
+  <%= @student.state_test_soc %>
+</p>
+
+<p>
+  <strong>Current school:</strong>
+  <%= @student.current_school %>
+</p>
+
+<p>
+  <strong>State grade:</strong>
+  <%= @student.state_grade %>
+</p>
+
+<%= link_to 'Edit', edit_student_path(@student) %> |
+<%= link_to 'Back', students_path %>

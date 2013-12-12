@@ -1,0 +1,1 @@
+json.extract! @student, :id, :student_number, :name, :la_sped, :iep_speech_only, :state_test_ela, :state_test_math, :state_test_sci, :state_test_soc, :current_school, :state_grade, :created_at, :updated_at

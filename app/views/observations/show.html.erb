@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Teacher:</strong>
+  <%= @observation.teacher %>
+</p>
+
+<p>
+  <strong>Score:</strong>
+  <%= @observation.score %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @observation.date %>
+</p>
+
+<p>
+  <strong>Observer:</strong>
+  <%= @observation.observer %>
+</p>
+
+<p>
+  <strong>Quarter:</strong>
+  <%= @observation.quarter %>
+</p>
+
+<p>
+  <strong>Small school:</strong>
+  <%= @observation.small_school %>
+</p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @observation.year %>
+</p>
+
+<%= link_to 'Edit', edit_observation_path(@observation) %> |
+<%= link_to 'Back', observations_path %>

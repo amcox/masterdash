@@ -1,0 +1,83 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+.row
+	%div{class: ["small-12 columns"]}
+		%img{src: '/Users/Andrew/Dropbox/ReNew/Data Analysis/masterdash/public/images/logo.png', class: 'logo'}
+%div{class: "row student_info"}
+	%div{class: ["small-4 columns"]}= student_name
+	%div{class: ["small-4 columns center_aligned"]}= student_subject
+	%div{class: ["small-4 columns right_aligned"]}= student_grade
+.row
+	%div{class: ["small-6 columns"]}
+		%p{class: "leap_header center_aligned bold no_bottom_margin"} 2013 i/LEAP
+		.row
+			%div{class: ["small-12 columns center_aligned"]}
+				%table
+					%tbody
+						%tr.blue
+							%th Scaled Score
+							%th Achievement Level
+						%tr
+							%td= leap_scaled_score
+							%td= leap_al
+	%div{class: ["small-6 columns"]}
+		%p{class: "leap_header center_aligned bold no_bottom_margin"} 2014 i/LEAP Goal
+		.row
+			%div{class: ["small-12 columns center_aligned"]}
+				%table
+					%tbody
+						%tr.goal
+							%td Scaled Score
+							%td Achievement Level
+						%tr
+							%td <br />
+							%td
+.row
+	%table{class: "mlqs score_table"}
+		%tbody
+			%tr{class: "blue center_aligned"}
+				%th{class: "bold", width: "20%"} MLQs
+				%th{width: "15%"} Score
+				%th Achievement Level
+				%th{width: "30%"} How many points did you increase (+) or decrease (-) from the last quiz?
+				%th Goal for Next Quiz
+			- (1..7).each do |mlq_num|
+				%tr
+					%td= "MLQ #{mlq_num}" 
+					%td= mlqs[mlq_num][:score] unless !mlqs.has_key?(mlq_num)
+					%td= mlqs[mlq_num][:al] unless !mlqs.has_key?(mlq_num)
+					%td
+					%td
+			%tr.goal
+				%td Goal
+				%td 
+				%td 
+				%td
+				%td
+
+.row
+	%table{class: "benchmarks score_table"}
+		%body
+			%tr{class: "blue center_aligned"}
+				%th{class: "bold", width: "20%"} Benchmarks
+				%th{width: "15%"} Score
+				%th Achievement Level
+				%th{width: "30%"} How many points did you increase (+) or decrease (-) from the last test?
+				%th Goal for Next Test
+			- benchmark_names = {B1: "Benchmark 1", B2: "Benchmark 2", B3: "Benchmark 3",
+				PL: "Practice LEAP", B4: "Benchmark 4"}
+			- benchmark_names.each do |bench_key, bench_name|
+				%tr
+					%td= bench_name
+					%td= benchmarks[bench_key][:score] unless !benchmarks.has_key?(bench_key)
+					%td= benchmarks[bench_key][:al] unless !benchmarks.has_key?(bench_key)
+					%td
+					%td
+			%tr.goal
+				%td Goal
+				%td 
+				%td 
+				%td
+				%td
+				

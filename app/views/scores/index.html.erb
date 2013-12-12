@@ -1,0 +1,53 @@
+<h1>Listing scores</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Student</th>
+      <th>Test</th>
+      <th>Subject</th>
+      <th>Achievement</th>
+      <th>Ai points</th>
+      <th>Scaled score</th>
+      <th>Percentile</th>
+      <th>Percent</th>
+      <th>On level</th>
+      <th>Gap</th>
+      <th>Growth goal</th>
+      <th>Previous growth goal</th>
+      <th>String</th>
+      <th>Year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @scores.each do |score| %>
+      <tr>
+        <td><%= score.student %></td>
+        <td><%= score.test %></td>
+        <td><%= score.subject %></td>
+        <td><%= score.achievement %></td>
+        <td><%= score.ai_points %></td>
+        <td><%= score.scaled_score %></td>
+        <td><%= score.percentile %></td>
+        <td><%= score.percent %></td>
+        <td><%= score.on_level %></td>
+        <td><%= score.gap %></td>
+        <td><%= score.growth_goal %></td>
+        <td><%= score.previous_growth_goal %></td>
+        <td><%= score.string %></td>
+        <td><%= score.year %></td>
+        <td><%= link_to 'Show', score %></td>
+        <td><%= link_to 'Edit', edit_score_path(score) %></td>
+        <td><%= link_to 'Destroy', score, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Score', new_score_path %>

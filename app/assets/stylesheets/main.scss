@@ -1,0 +1,61 @@
+body,
+table tr td,
+table tr th,
+p {
+	font-size: 8pt;
+}
+
+.student_info {
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+table {
+	margin: 0 auto;
+	td, th {
+		border: 1px black solid;
+	}
+	tr.blue {
+		background: #4DAEEF;
+	}
+	tbody {
+		tr {
+			background: white;
+		}
+		tr.goal {
+			background: #96D352;
+		}
+	}
+}
+
+.center_aligned, tr.center_aligned td,
+tr.center_aligned th {
+	text-align: center;
+}
+
+.right_aligned {
+	text-align: right;
+}
+
+.row {
+	padding-top: 15px;
+}
+
+img.logo {
+	display: block;
+	width: 200px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+p.no_bottom_margin {
+	margin-bottom: 0px;
+}
+
+table.score_table {
+	margin-top: 15px;
+}

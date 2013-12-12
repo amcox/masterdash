@@ -1,0 +1,45 @@
+<h1>Listing enrollments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Student</th>
+      <th>Teacher</th>
+      <th>Subject</th>
+      <th>Grade</th>
+      <th>Year</th>
+      <th>School</th>
+      <th>Current</th>
+      <th>Fay</th>
+      <th>Section</th>
+      <th>Class type</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @enrollments.each do |enrollment| %>
+      <tr>
+        <td><%= enrollment.student %></td>
+        <td><%= enrollment.teacher %></td>
+        <td><%= enrollment.subject %></td>
+        <td><%= enrollment.grade %></td>
+        <td><%= enrollment.year %></td>
+        <td><%= enrollment.school %></td>
+        <td><%= enrollment.current %></td>
+        <td><%= enrollment.fay %></td>
+        <td><%= enrollment.section %></td>
+        <td><%= enrollment.class_type %></td>
+        <td><%= link_to 'Show', enrollment %></td>
+        <td><%= link_to 'Edit', edit_enrollment_path(enrollment) %></td>
+        <td><%= link_to 'Destroy', enrollment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Enrollment', new_enrollment_path %>

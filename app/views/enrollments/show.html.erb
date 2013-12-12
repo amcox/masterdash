@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Student:</strong>
+  <%= @enrollment.student %>
+</p>
+
+<p>
+  <strong>Teacher:</strong>
+  <%= @enrollment.teacher %>
+</p>
+
+<p>
+  <strong>Subject:</strong>
+  <%= @enrollment.subject %>
+</p>
+
+<p>
+  <strong>Grade:</strong>
+  <%= @enrollment.grade %>
+</p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @enrollment.year %>
+</p>
+
+<p>
+  <strong>School:</strong>
+  <%= @enrollment.school %>
+</p>
+
+<p>
+  <strong>Current:</strong>
+  <%= @enrollment.current %>
+</p>
+
+<p>
+  <strong>Fay:</strong>
+  <%= @enrollment.fay %>
+</p>
+
+<p>
+  <strong>Section:</strong>
+  <%= @enrollment.section %>
+</p>
+
+<p>
+  <strong>Class type:</strong>
+  <%= @enrollment.class_type %>
+</p>
+
+<%= link_to 'Edit', edit_enrollment_path(@enrollment) %> |
+<%= link_to 'Back', enrollments_path %>

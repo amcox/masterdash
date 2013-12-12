@@ -1,0 +1,73 @@
+<%= form_for(@score) do |f| %>
+  <% if @score.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@score.errors.count, "error") %> prohibited this score from being saved:</h2>
+
+      <ul>
+      <% @score.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :student %><br>
+    <%= f.text_field :student %>
+  </div>
+  <div class="field">
+    <%= f.label :test %><br>
+    <%= f.text_field :test %>
+  </div>
+  <div class="field">
+    <%= f.label :subject %><br>
+    <%= f.text_field :subject %>
+  </div>
+  <div class="field">
+    <%= f.label :achievement %><br>
+    <%= f.text_field :achievement %>
+  </div>
+  <div class="field">
+    <%= f.label :ai_points %><br>
+    <%= f.number_field :ai_points %>
+  </div>
+  <div class="field">
+    <%= f.label :scaled_score %><br>
+    <%= f.number_field :scaled_score %>
+  </div>
+  <div class="field">
+    <%= f.label :percentile %><br>
+    <%= f.text_field :percentile %>
+  </div>
+  <div class="field">
+    <%= f.label :percent %><br>
+    <%= f.text_field :percent %>
+  </div>
+  <div class="field">
+    <%= f.label :on_level %><br>
+    <%= f.check_box :on_level %>
+  </div>
+  <div class="field">
+    <%= f.label :gap %><br>
+    <%= f.text_field :gap %>
+  </div>
+  <div class="field">
+    <%= f.label :growth_goal %><br>
+    <%= f.text_field :growth_goal %>
+  </div>
+  <div class="field">
+    <%= f.label :previous_growth_goal %><br>
+    <%= f.text_field :previous_growth_goal %>
+  </div>
+  <div class="field">
+    <%= f.label :string %><br>
+    <%= f.text_field :string %>
+  </div>
+  <div class="field">
+    <%= f.label :year %><br>
+    <%= f.number_field :year %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

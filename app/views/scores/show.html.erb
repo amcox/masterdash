@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Student:</strong>
+  <%= @score.student %>
+</p>
+
+<p>
+  <strong>Test:</strong>
+  <%= @score.test %>
+</p>
+
+<p>
+  <strong>Subject:</strong>
+  <%= @score.subject %>
+</p>
+
+<p>
+  <strong>Achievement:</strong>
+  <%= @score.achievement %>
+</p>
+
+<p>
+  <strong>Ai points:</strong>
+  <%= @score.ai_points %>
+</p>
+
+<p>
+  <strong>Scaled score:</strong>
+  <%= @score.scaled_score %>
+</p>
+
+<p>
+  <strong>Percentile:</strong>
+  <%= @score.percentile %>
+</p>
+
+<p>
+  <strong>Percent:</strong>
+  <%= @score.percent %>
+</p>
+
+<p>
+  <strong>On level:</strong>
+  <%= @score.on_level %>
+</p>
+
+<p>
+  <strong>Gap:</strong>
+  <%= @score.gap %>
+</p>
+
+<p>
+  <strong>Growth goal:</strong>
+  <%= @score.growth_goal %>
+</p>
+
+<p>
+  <strong>Previous growth goal:</strong>
+  <%= @score.previous_growth_goal %>
+</p>
+
+<p>
+  <strong>String:</strong>
+  <%= @score.string %>
+</p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @score.year %>
+</p>
+
+<%= link_to 'Edit', edit_score_path(@score) %> |
+<%= link_to 'Back', scores_path %>
