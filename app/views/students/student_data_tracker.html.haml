@@ -5,9 +5,8 @@
 	%div{class: ["small-12 columns"]}
 		%img{src: '/Users/Andrew/Dropbox/ReNew/Data Analysis/masterdash/public/images/logo.png', class: 'logo'}
 %div{class: "row student_info"}
-	%div{class: ["small-4 columns"]}= student_name
-	%div{class: ["small-4 columns center_aligned"]}= student_subject
-	%div{class: ["small-4 columns right_aligned"]}= student_grade
+	%div{class: ["small-6 columns"]}= student_name
+	%div{class: ["small-6 columns right_aligned"]}= "#{student_grade} #{student_subject}"
 .row
 	%div{class: ["small-6 columns"]}
 		%p{class: "leap_header center_aligned bold no_bottom_margin"} 2013 i/LEAP
@@ -39,7 +38,7 @@
 			%tr{class: "blue center_aligned"}
 				%th{class: "bold", width: "20%"} MLQs
 				%th{width: "15%"} Score
-				%th Achievement Level
+				%th{width: "20%"} Achievement Level
 				%th{width: "30%"} How many points did you increase (+) or decrease (-) from the last quiz?
 				%th Goal for Next Quiz
 			- (1..7).each do |mlq_num|
@@ -62,8 +61,8 @@
 			%tr{class: "blue center_aligned"}
 				%th{class: "bold", width: "20%"} Benchmarks
 				%th{width: "15%"} Score
-				%th Achievement Level
-				%th{width: "30%"} How many points did you increase (+) or decrease (-) from the last test?
+				%th{width: "20%"} Achievement Level
+				%th{width: "25%"} How many points did you increase (+) or decrease (-) from the last test?
 				%th Goal for Next Test
 			- benchmark_names = {B1: "Benchmark 1", B2: "Benchmark 2", B3: "Benchmark 3",
 				PL: "Practice LEAP", B4: "Benchmark 4"}

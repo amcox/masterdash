@@ -18,4 +18,9 @@ class Enrollment < ActiveRecord::Base
       end
     end
   end
+  
+  def self.unique_sections
+    select("school, teacher_id, subject, section").distinct.order(:section).
+    order(:teacher_id).order(:subject).order(:school)
+  end
 end

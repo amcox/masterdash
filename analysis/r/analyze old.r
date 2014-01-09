@@ -1,23 +1,17 @@
 library(gdata)
 library(plyr)
 library(reshape2)
-library(RPostgreSQL)
 library(car)
 library(compute.es)
 library(ggplot2)
 library(scales)
 library(gridExtra)
 
-drv <- dbDriver("PostgreSQL")
-con <- dbConnect(drv, dbname="masterdash", host="localhost", port=5432)
-
 df.tests <- dbGetQuery(con, "select * from tests")
 df.students <- dbGetQuery(con, "select * from students")
 df.enrollments <- dbGetQuery(con, "select * from enrollments")
 df.scores <- dbGetQuery(con, "select * from scores")
 df.teachers <- dbGetQuery(con, "select * from teachers")
-
-test.order <- c("L13", "MLQ1", "MLQ2", "MLQ3", "B1", "MLQ4", "MLQ5", "B2", "MLQ6", "MLQ7", "B3", "PL", "L14", "B4")
 
 scores.enrollments.query <- "SELECT s.*,
 		e.subject subject,
@@ -101,8 +95,6 @@ write.csv(dsum.cr, "cr_by_school_grade.csv", row.names=F, na="")
 
 # Make figures for each teacher
 # Bar graphs for all assessments in the year
-# alPalette <- c("#00D77B", "#00BE61", "#198D33", "#E5E167", "#D16262")
-alPalette <- c("A"="#00D77B", "M"="#00BE61", "B"="#198D33", "AB"="#E5E167", "U"="#D16262")
 d.s <- subset(df.se, teacher_name=='Leist, Kate')
 d.s.s <- d.s[,c("id", "achievement_level", "subject", "test_name", "grade", "percent")]
 d.s.s$achievement_level <- gsub("B2", "A", d.s.s$achievement_level)
@@ -426,39 +418,41 @@ sped.scores.query <- "SELECT *,
 			WHEN la_sped = 1 THEN 'iep_no_speech'
 			ELSE 'gened'
 		END sped_category
-FROM
-(SELECT s.*,
-		st.la_sped,
-		st.iep_speech_only,
-		CASE e.subject
-    WHEN 'ela' THEN
-			st.state_test_ela
-    WHEN 'math' THEN
-			st.state_test_math
-    WHEN 'sci' THEN
-			st.state_test_sci
-    WHEN 'soc' THEN
-			st.state_test_soc
-    ELSE NULL
-	END state_test,
-		e.subject subject,
-		e.grade grade,
-		e.school school,
-		tests.name test_name,
-		tests.order test_order
 FROM (
-	SELECT student_id,
-		subject,
-		school,
-		MAX(grade) grade,
-		year,
-		type
-	FROM enrollments
-	GROUP BY student_id, subject, school, year, type
-) e
-JOIN scores s ON s.student_id = e.student_id AND e.subject = s.subject
-JOIN tests ON tests.id = s.test_id
-JOIN students st ON s.student_id = st.id) scores_info
+	SELECT s.*,
+			st.la_sped,
+			st.iep_speech_only,
+			st.student_number,
+			CASE e.subject
+	    WHEN 'ela' THEN
+				st.state_test_ela
+	    WHEN 'math' THEN
+				st.state_test_math
+	    WHEN 'sci' THEN
+				st.state_test_sci
+	    WHEN 'soc' THEN
+				st.state_test_soc
+	    ELSE NULL
+		END state_test,
+			e.subject subject,
+			e.grade grade,
+			e.school school,
+			tests.name test_name,
+			tests.order test_order
+	FROM (
+		SELECT student_id,
+			subject,
+			school,
+			MAX(grade) grade,
+			year,
+			type
+		FROM enrollments
+		GROUP BY student_id, subject, school, year, type
+	) e
+	JOIN scores s ON s.student_id = e.student_id AND e.subject = s.subject
+	JOIN tests ON tests.id = s.test_id
+	JOIN students st ON s.student_id = st.id
+) scores_info
 WHERE achievement_level NOT IN ('WTS', 'MS', 'ES')"
 df.sped <- data.frame(dbGetQuery(con, sped.scores.query), stringsAsFactors=T)
 df.sped <- data.frame(rapply(df.sped, as.factor, classes="character",
@@ -509,8 +503,7 @@ test.order <- c("L13", "MLQ1", "MLQ2", "MLQ3", "B1", "MLQ4", "MLQ5", "B2",
 								"MLQ6", "MLQ7", "B3", "PL", "L14", "B4"
 )
 d <- subset(df.m, subject == 'ela' & grade.category == '35')
-# TODO Switch over to school and grade category faceting, since there's too
-# many panels on the page. Iterate over to save PDFs.
+
 for (gc in unique(df.m$grade.category)) {
 	d.gc <- subset(df.m, grade.category == gc)
 	for (sub in unique(d.gc$subject)) {

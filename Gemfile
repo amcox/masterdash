@@ -40,6 +40,8 @@ gem 'pdfkit'
 gem 'squeel', git: "git://github.com/activerecord-hackery/squeel.git"
 gem "non-stupid-digest-assets"
 
+gem 'google_drive'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

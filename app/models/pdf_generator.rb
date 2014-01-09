@@ -2,7 +2,7 @@ class PdfGenerator
   require 'pdfkit'
   
   def initialize(html)
-    @kit = PDFKit.new(html)
+    @kit = PDFKit.new(html, lowquality: true)
     @kit.stylesheets << "#{Rails.root}/public/assets/application.css"
   end
   

@@ -36,4 +36,19 @@ class Formatter
     end
   end
   
+  def self.subject_long(subject)
+    case subject
+    when "ela"
+      "ELA"
+    when "math"
+      "Math"
+    when "sci"
+      "Science"
+    when "soc"
+      "Social Studies"
+    else
+      nil
+    end
+  end
+  
 end

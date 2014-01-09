@@ -9,7 +9,7 @@ class Teacher < ActiveRecord::Base
     headers = csv.first.headers
     csv.each do |row|
       teacher = Teacher.where(teacher_number: row[:teacher_number]).first_or_create
-      teacher.update(name: row[:name], active: true)
+      teacher.update(name: row[:teacher_name], active: true)
     end
   end
   
