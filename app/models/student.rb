@@ -1,6 +1,6 @@
 class Student < ActiveRecord::Base
   has_many :enrollments
-  has_many :scores
+  has_many :scores, dependent: :destroy
   has_many :teachers, through: :enrollments
   
   def self.import(file_path)

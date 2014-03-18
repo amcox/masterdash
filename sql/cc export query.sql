@@ -40,8 +40,8 @@ SELECT
 	END subject,
   ce.instruction_type class_type,
 	'FALSE' fay,
-	'TRUE' current,
-	2014 year
+	'TRUE' "current",
+	2014 "year"
 FROM cc
 JOIN students s ON cc.studentID = s.id
 LEFT JOIN u_def_ext_students se ON se.studentsdcid = s.dcid
