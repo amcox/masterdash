@@ -17,15 +17,15 @@ update_functions <- function() {
 }
 update_functions()
 
-single_test_bar_percs_plot <- function(d, test.name.str) {
-  ggplot(d, aes(x=school, y=perc, fill=achievement.level))+
+multi_test_by_schools_bar_plot <- function(d, s) {
+  ggplot(d, aes(x=test_name, y=perc, fill=achievement.level))+
   		geom_bar(stat="identity")+
-  		scale_x_discrete(limits=schools)+
+  		scale_x_discrete(limits=test.order)+
   		scale_y_continuous(labels=percent, breaks=seq(0,1,.1))+
   		scale_fill_manual(values=alPalette, guide=F)+
   		ylab("Percent of Scores")+
-  		xlab("School")+
-  		labs(title=paste0("2013 ", test.name.str, " Scores"))+
+  		xlab("Assessment")+
+  		labs(title=paste0(long_labeller("school", s), " 2013-14 Benchmark Scores by Subject and Grade"))+
   		facet_grid(subject ~ grade, labeller=short_labeller)+
   		theme_bw()+
   		theme(axis.text.x=element_text(size=5, angle=90, vjust=0.5),
@@ -36,12 +36,12 @@ single_test_bar_percs_plot <- function(d, test.name.str) {
 con <- prepare_connection()
 df <- create_student_school_scores_roll_up(con)
 
-for (t in test.order){
-  df.t <- subset(df, test_name == t & grade %in% plain.grades)
-	p <- single_test_bar_percs_plot(df.t, t)
-  save_plot_as_pdf(p, paste0("2013-14 ", t, " Scores by Grades"))
+for (s in schools){
+  df.s <- subset(df, school == s & grade %in% plain.grades)
+	p <- multi_test_by_schools_bar_plot(df.s, s)
+  save_plot_as_pdf(p, paste0(long_labeller("school", s), " 2013-14 Benchmark Scores, Single Grades"))
 	
-	df.t <- subset(df, test_name == t & grade %in% total.grades)
-	p <- single_test_bar_percs_plot(df.t, t)
-  save_plot_as_pdf(p, paste0("2013-14 ", t, " Scores by Small Schools"))
+	df.s <- subset(df, school == s & grade %in% total.grades)
+	p <- multi_test_by_schools_bar_plot(df.s, s)
+  save_plot_as_pdf(p, paste0(long_labeller("school", s), " 2013-14 Benchmark Scores, Small Schools"))
 }
