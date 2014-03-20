@@ -148,8 +148,6 @@ d.percs$achievement.level <- reorder(d.percs$achievement.level,
 d.percs <- d.percs[order(as.numeric(d.percs$achievement.level)),]
 d.percs$subject <- reorder(d.percs$subject, new.order=subjects.order)
 d.percs$grade <- reorder(d.percs$grade, new.order=all.grades)
-# d.percs <- d.percs[order(as.numeric(d.percs$achievement.level)),]
-
 
 single_test_bar_percs_plot <- function(d, test.name.str) {
   ggplot(d, aes(x=school, y=perc, fill=achievement.level))+
@@ -170,9 +168,9 @@ single_test_bar_percs_plot <- function(d, test.name.str) {
 for (t in test.order){
   df.t <- subset(d.percs, test_name == t & grade %in% plain.grades)
 	p <- single_test_bar_percs_plot(df.t, t)
-  save_plot_as_pdf(p, paste0("2013 ", t, " Scores by Grades.pdf"))
+  save_plot_as_pdf(p, paste0("2013 ", t, " Scores by Grades"))
 	
 	df.t <- subset(d.percs, test_name == t & grade %in% total.grades)
 	p <- single_test_bar_percs_plot(df.t, t)
-  save_plot_as_pdf(p, paste0("2013 ", t, " Scores by Small Schools.pdf"))
+  save_plot_as_pdf(p, paste0("2013 ", t, " Scores by Small Schools"))
 }

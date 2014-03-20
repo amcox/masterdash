@@ -21,7 +21,7 @@ short_labeller <- function(var, value){
 				value[value==6]   <- "6th"
 				value[value==7]   <- "7th"
 				value[value==8]   <- "8th"
-				value[value=="0-2"]   <- "PK-2"
+				value[value=="0-2"]   <- "K-2"
 				value[value=="3-5"]   <- "3-5"
 				value[value=="6-8"]   <- "6-8"
 				value[value=="3-8"]   <- "3-8"
@@ -35,6 +35,7 @@ short_labeller <- function(var, value){
 				value[value=="DTA"]   <- "DTA"
 				value[value=="SCH"]   <- "SCH"
 				value[value=="All"]   <- "All"
+        value[value=="all"]   <- "All"
     }
     return(value)
 }
@@ -59,12 +60,13 @@ long_labeller <- function(var, value){
 				value[value==6]   <- "6th Grade"
 				value[value==7]   <- "7th Grade"
 				value[value==8]   <- "8th Grade"
-				value[value=="0_2"]   <- "PK-2 Grades"
-				value[value=="3_5"]   <- "3-5 Grades"
-				value[value=="6_8"]   <- "6-8 Grades"
-				value[value=="3_8"]   <- "3-8 Grades"
+				value[value=="0-2"]   <- "K-2 Grades"
+				value[value=="3-5"]   <- "3-5 Grades"
+				value[value=="6-8"]   <- "6-8 Grades"
+				value[value=="3-8"]   <- "3-8 Grades"
 				value[value=="t"]   <- "All Grades"
 				value[value=="T"]   <- "All Grades"
+        value[value=="all"]   <- "All Grades"
     }
 		if (var=="school") { 
         value[value=="RCAA"] <- "RCAA"
@@ -72,6 +74,7 @@ long_labeller <- function(var, value){
 				value[value=="DTA"]   <- "DTA"
 				value[value=="SCH"]   <- "SCH"
 				value[value=="All"]   <- "All Schools"
+        value[value=="all"]   <- "All Schools"
     }
     return(value)
 }
