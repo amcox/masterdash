@@ -28,6 +28,8 @@
   Run the query 'cc export query.sql' in SQLDeveloper and export the result as
   'enrollments_import.csv'. No modification needed.
 
+    ActiveRecord::Base.logger.level = 1
+    
     Enrollment.import('csvs/enrollments_import.csv')
   
 6. **Scores imported**
@@ -43,6 +45,8 @@
   The following code hides SQL statements from the console:
     
     ActiveRecord::Base.logger.level = 1
+    
+  Then import.
   
     Score.import('csvs/scores_import.csv')
   

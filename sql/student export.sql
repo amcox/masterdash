@@ -3,7 +3,7 @@ SELECT
 	s.lastfirst name,
   sc.abbreviation current_school,
 	ps_customfields.getStudentscf(s.id, 'la_sped') la_sped,
-	ps_customfields.getStudentscf(s.id, 'iep_speech_only') iep_speech_only,
+  se.iep_speech_only iep_speech_only,
 	CASE WHEN se.state_test_ela LIKE '%LAA%' THEN 'LAA' ELSE NULL END state_test_ela,
 	CASE WHEN se.state_test_math LIKE '%LAA%' THEN 'LAA' ELSE NULL END state_test_math,
 	CASE WHEN se.state_test_science LIKE '%LAA%' THEN 'LAA' ELSE NULL END state_test_sci,

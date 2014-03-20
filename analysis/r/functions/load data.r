@@ -149,5 +149,9 @@ get_sped_scores_data <- function(con) {
   	JOIN students st ON s.student_id = st.id
   ) scores_info
   WHERE achievement_level NOT IN ('WTS', 'MS', 'ES')"
-  return(dbGetQuery(con, sped.scores.query))
+  d <- data.frame(dbGetQuery(con, sped.scores.query), stringsAsFactors=T)
+  d <- data.frame(rapply(d, as.factor, classes="character",
+  											how="replace")
+  )
+  return(d)
 }
