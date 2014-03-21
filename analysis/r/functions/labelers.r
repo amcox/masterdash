@@ -46,6 +46,7 @@ long_labeller <- function(var, value){
         value[value=="math"]   <- "Math"
 				value[value=="sci"]   <- "Science"
 				value[value=="ss"]   <- "Social Studies"
+        value[value=="soc"]   <- "Social Studies"
 				value[value=="t"]   <- "All Subjects"
 				value[value=="T"]   <- "All Subjects"
         value[value=="all"]   <- "All Subjects"
