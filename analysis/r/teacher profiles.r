@@ -18,23 +18,12 @@ con <- prepare_connection()
 
 # Get scores by class enrollments
 df.se <- get_scores_enrollments_data(con)
-df.se$achievement_level <- gsub("AB2", "B", df.se$achievement_level)
-df.se$achievement_level <- gsub("B2", "A", df.se$achievement_level)
-df.se$achievement_level <- gsub("PF", "U", df.se$achievement_level)
-df.se$achievement_level <- gsub("F", "U", df.se$achievement_level)
-df.se$achievement_level <- gsub("ES", "A", df.se$achievement_level)
-df.se$achievement_level <- gsub("MS", "B", df.se$achievement_level)
-df.se$achievement_level <- gsub("WTS", "AB", df.se$achievement_level)
+df.se$achievement_level <- make_adjusted_als(df.se$achievement_level)
 
 # Get scores by school enrollments
 df.gsse <- get_school_scores_enrollments_data(con)
-df.gsse$achievement_level <- gsub("AB2", "B", df.gsse$achievement_level)
-df.gsse$achievement_level <- gsub("B2", "A", df.gsse$achievement_level)
-df.gsse$achievement_level <- gsub("PF", "U", df.gsse$achievement_level)
-df.gsse$achievement_level <- gsub("F", "U", df.gsse$achievement_level)
-df.gsse$achievement_level <- gsub("ES", "A", df.gsse$achievement_level)
-df.gsse$achievement_level <- gsub("MS", "B", df.gsse$achievement_level)
-df.gsse$achievement_level <- gsub("WTS", "AB", df.gsse$achievement_level)
+df.gsse$achievement_level <- make_adjusted_als(df.gsse$achievement_level)
+
 # Convert LEAP achievement levels to numbers so they can get a z score
 al.numbers <- data.frame(achievement_level=c("A", "M", "B", "AB", "U", "B2", "AB2", "F", "PF", "ES", "MS", "WTS"),
 												achievement_code=c(1, 0.75, 0.5, 0.25, 0, 1, 0.5, 0.25, 0, 1, 0.5, 1)
@@ -47,7 +36,7 @@ highlights <- data.frame(test=c("MLQ1", "MLQ2", "MLQ3", "MLQ4", "MLQ5", "MLQ6", 
 )
 
 # Get STAR data
-df.star <- read.csv(file="../data/student star summary.csv", head=TRUE, na.string=c("", " ", "  "))
+df.star <- read.csv(file="../data/student STAR data with LEAP prediction.csv", head=TRUE, na.string=c("", " ", "  "))
 df.e <- get_enrollments_data(con)
 df.star.e <- merge(df.star, df.e, by.x="StudentId", by.y="student_number")
 df.students <- get_students_data(con)
