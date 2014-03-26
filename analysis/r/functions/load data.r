@@ -35,8 +35,8 @@ get_scores_enrollments_data <- function(con=NA){
 
 get_school_scores_enrollments_data <- function(con=NA) {
   # This returns one score per student-school-subject-test
+  # with section information
   scores.enrollments.query <- "SELECT s.*,
-  		e.subject subject,
   		e.grade grade,
   		e.school school,
   		e.section section,
@@ -63,14 +63,45 @@ get_school_scores_enrollments_data <- function(con=NA) {
   return(dbGetQuery(con, scores.enrollments.query))
 }
 
-get_single_score_per_student_data <- function(con=NA) {
+get_school_scores_enrollments_data <- function(con=NA) {
   # This returns one score per student-school-subject-test
+  # with section information
+  scores.enrollments.query <- "SELECT s.*,
+  		e.grade grade,
+  		e.school school,
+  		e.section section,
+  		t.teacher_number teacher_number,
+  		t.name teacher_name,
+  		tests.name test_name,
+  		tests.order test_order
+  FROM (
+  	SELECT student_id,
+  		subject,
+  		school,
+  		teacher_id,
+  		MAX(grade) grade,
+  		year,
+  		MAX(section) section,
+  		class_type
+  	FROM enrollments
+  	GROUP BY student_id, subject, school, teacher_id, year, class_type
+  ) e
+  JOIN scores s ON s.student_id = e.student_id AND e.subject = s.subject
+  JOIN teachers t ON t.id = e.teacher_id
+  JOIN tests ON tests.id = s.test_id"
+  
+  return(dbGetQuery(con, scores.enrollments.query))
+}
+
+get_single_score_per_student_with_student_data <- function(con=NA) {
+  # This returns one score per student-school-subject-test
+  # without section information, with student ID
   q <- "SELECT s.*,
-  		e.subject subject,
   		e.grade grade,
   		e.school school,
   		tests.name test_name,
-  		tests.order test_order
+  		tests.order test_order,
+      st.student_number student_number
   FROM (
   	SELECT student_id,
   		subject,
@@ -82,7 +113,8 @@ get_single_score_per_student_data <- function(con=NA) {
   	GROUP BY student_id, subject, school, year
   ) e
   JOIN scores s ON s.student_id = e.student_id AND e.subject = s.subject
-  JOIN tests ON tests.id = s.test_id"
+  JOIN tests ON tests.id = s.test_id
+  JOIN students st ON st.id = s.student_id"
   
   return(dbGetQuery(con, q))
 }

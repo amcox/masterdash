@@ -11,3 +11,12 @@ total.grades <- c("0-2", "3-5", "6-8", "3-8", "0-8")
 schools <- c("RCAA", "STA", "DTA", "SCH", "all")
 
 subjects.order <- c("ela", "math", "sci", "soc", "all")
+
+# Make df to highlight benchmark and leap scores
+highlights <- data.frame(test=c("MLQ1", "MLQ2", "MLQ3", "MLQ4", "MLQ5", "MLQ6", "MLQ7"),
+                        perc=c(1,1,1,1,1,1,1)
+)
+
+al.numbers <- data.frame(achievement_level=c("A", "M", "B", "AB", "U", "B2", "AB2", "F", "PF", "ES", "MS", "WTS"),
+												achievement_code=c(1, 0.75, 0.5, 0.25, 0, 1, 0.5, 0.25, 0, 1, 0.5, 1)
+)
