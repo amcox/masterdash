@@ -30,11 +30,6 @@ al.numbers <- data.frame(achievement_level=c("A", "M", "B", "AB", "U", "B2", "AB
 )
 df.gsse <- merge(df.gsse, al.numbers)
 
-# Make df to highlight benchmark and leap scores
-highlights <- data.frame(test=c("MLQ1", "MLQ2", "MLQ3", "MLQ4", "MLQ5", "MLQ6", "MLQ7"),
-                        perc=c(1,1,1,1,1,1,1)
-)
-
 # Get STAR data
 df.star <- read.csv(file="../data/student STAR data with LEAP prediction.csv", head=TRUE, na.string=c("", " ", "  "))
 df.e <- get_enrollments_data(con)

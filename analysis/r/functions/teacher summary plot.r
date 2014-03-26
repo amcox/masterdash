@@ -14,7 +14,15 @@ teacher.summary.plot.38 <- function(teacher.name, se.data, gsse.data, star.data,
 		
   # AL bars plot for DCI tests
   se.t <- subset(se.data, teacher_name==teacher.name)
-	se.t.c <- se.t[,c("id", "achievement_level", "subject", "test_name", "grade", "percent")]
+	se.t.c <- se.t[,c("id", "teacher_name", "achievement_level", "subject", "test_name", "grade", "percent", "scaled_score")]
+	se.t.c <- merge(se.t.c, al.numbers)
+  se.t.c$perc_or_al_num <- apply(se.t.c, 1, function(r){
+    if(is.na(r['percent'])){
+      return(as.numeric(r['achievement_code']))
+    }else{
+      return(as.numerics(r['percent']))
+    }
+  })
 	d.props <- ddply(se.t.c, .(grade, subject), function(d){
 		data.frame(prop.table(table(d$test_name, d$achievement_level), 1))
 	})
@@ -29,7 +37,7 @@ teacher.summary.plot.38 <- function(teacher.name, se.data, gsse.data, star.data,
 	
 	p.bars <- ggplot()+
 		geom_bar(data=d.props, aes(x=test, y=perc, fill=reorder(achievement_level, new.order=c("A", "M", "B", "AB", "U"))), stat="identity")+
-		geom_boxplot(data=se.t.c, aes(x=test_name, y=percent), alpha=0.01, width=0.5)+
+		geom_boxplot(data=se.t.c, aes(x=test_name, y=perc_or_al_num), alpha=0.01, width=0.5)+
 		geom_bar(data=highlights, aes(x=test, y=perc), fill="white", stat="identity", alpha=.4)+
 		scale_x_discrete(limits=test.order)+
 		scale_y_continuous(labels=percent, breaks=seq(0,1,.1))+
