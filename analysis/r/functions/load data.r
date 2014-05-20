@@ -13,7 +13,7 @@ check_for_con_and_create <- function(con_to_test=NA){
   return(con)
 }
 
-con <- check_for_con_and_create()
+con <- check_for_con_and_create(con)
 
 get_scores_enrollments_data <- function(con=NA){
   scores.enrollments.query <- "SELECT s.*,
@@ -30,36 +30,6 @@ get_scores_enrollments_data <- function(con=NA){
   JOIN teachers t ON t.id = e.teacher_id
   JOIN tests ON tests.id = s.test_id"
 
-  return(dbGetQuery(con, scores.enrollments.query))
-}
-
-get_school_scores_enrollments_data <- function(con=NA) {
-  # This returns one score per student-school-subject-test
-  # with section information
-  scores.enrollments.query <- "SELECT s.*,
-  		e.grade grade,
-  		e.school school,
-  		e.section section,
-  		t.teacher_number teacher_number,
-  		t.name teacher_name,
-  		tests.name test_name,
-  		tests.order test_order
-  FROM (
-  	SELECT student_id,
-  		subject,
-  		school,
-  		teacher_id,
-  		MAX(grade) grade,
-  		year,
-  		MAX(section) section,
-  		class_type
-  	FROM enrollments
-  	GROUP BY student_id, subject, school, teacher_id, year, class_type
-  ) e
-  JOIN scores s ON s.student_id = e.student_id AND e.subject = s.subject
-  JOIN teachers t ON t.id = e.teacher_id
-  JOIN tests ON tests.id = s.test_id"
-  
   return(dbGetQuery(con, scores.enrollments.query))
 }
 

@@ -14,4 +14,5 @@ LEFT JOIN u_def_ext_students se ON se.studentsdcid = s.dcid
 JOIN schools sc ON sc.school_number = s.schoolid
 AND s.grade_level > -1
 AND s.schoolid IN (1, 2, 3, 6)
-AND enroll_status = 0
+AND se.leap_count_student = 1
+-- AND enroll_status = 0
