@@ -52,8 +52,10 @@ JOIN courses c ON cc.course_number = c.course_number
 LEFT JOIN u_def_ext_courses ce ON ce.coursesdcid = c.dcid
 JOIN schools sch ON cc.schoolid = sch.school_number
 JOIN sections sec ON sec.id = cc.sectionid
-WHERE cc.dateenrolled <= CURRENT_DATE
-AND cc.dateleft > CURRENT_DATE
+-- WHERE cc.dateenrolled <= CURRENT_DATE
+-- AND cc.dateleft > CURRENT_DATE
+WHERE cc.dateenrolled <= TO_DATE('2014-04-07', 'YYYY-MM-DD')
+AND cc.dateleft > TO_DATE('2014-04-07', 'YYYY-MM-DD')
 AND s.grade_level > -1
 AND sch.school_number IN (1,2,3,6)
 AND ce.instruction_type = 'Core'
