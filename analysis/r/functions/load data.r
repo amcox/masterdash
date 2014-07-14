@@ -13,8 +13,6 @@ check_for_con_and_create <- function(con_to_test=NA){
   return(con)
 }
 
-con <- check_for_con_and_create(con)
-
 get_scores_enrollments_data <- function(con=NA){
   scores.enrollments.query <- "SELECT s.*,
   		e.subject subject,
@@ -181,4 +179,8 @@ get_sped_scores_data <- function(con) {
   											how="replace")
   )
   return(d)
+}
+
+load_report_card_data <- function(){
+  read.csv(file="./../Data/rc grades.csv", head=TRUE, na.string=c("", " ", "  ", 'NULL'))
 }

@@ -1,6 +1,6 @@
 create_student_school_scores_roll_up <- function(con) {
   # Get scores
-  df <- get_single_score_per_student_data(con)
+  df <- get_single_score_per_student_with_student_data(con)
   df$grade.category <- cut_grade_categories(df$grade)
   df$small.school <- make_small_school_labels(df)
   df <- subset(df, !achievement_level %in% c("WTS", "MS", "ES"))
@@ -64,27 +64,27 @@ create_student_school_scores_roll_up <- function(con) {
     dt <- ddply(ds, .(school, subject, test_name),
                 function(d) {percents_of_total_als(d$adj_achievement_level, 'achievement.level')}							
     )
-    dt$grade <- rep("3-8", nrow(dt))
+    dt$grade <- rep("3_8", nrow(dt))
     d.percs <- rbind(d.percs, dt)
     # and all schools
       dt <- ddply(ds, .(subject, test_name),
                   function(d) {percents_of_total_als(d$adj_achievement_level, 'achievement.level')}							
       )
-      dt$grade <- rep("3-8", nrow(dt))
+      dt$grade <- rep("3_8", nrow(dt))
       dt$school <- rep("all", nrow(dt))
       d.percs <- rbind(d.percs, dt)
     # and all subjects
       dt <- ddply(ds, .(school, test_name),
                   function(d) {percents_of_total_als(d$adj_achievement_level, 'achievement.level')}							
       )
-      dt$grade <- rep("3-8", nrow(dt))
+      dt$grade <- rep("3_8", nrow(dt))
       dt$subject <- rep("all", nrow(dt))
       d.percs <- rbind(d.percs, dt)
       # and all schools and subjects
         dt <- ddply(ds, .(test_name),
                     function(d) {percents_of_total_als(d$adj_achievement_level, 'achievement.level')}							
         )
-        dt$grade <- rep("3-8", nrow(dt))
+        dt$grade <- rep("3_8", nrow(dt))
         dt$school <- rep("all", nrow(dt))
         dt$subject <- rep("all", nrow(dt))
         d.percs <- rbind(d.percs, dt)
@@ -93,27 +93,27 @@ create_student_school_scores_roll_up <- function(con) {
   dt <- ddply(df, .(school, subject, test_name),
               function(d) {percents_of_total_als(d$adj_achievement_level, 'achievement.level')}							
   )
-  dt$grade <- rep("0-8", nrow(dt))
+  dt$grade <- rep("0_8", nrow(dt))
   d.percs <- rbind(d.percs, dt)
     # and all schools
       dt <- ddply(df, .(subject, test_name),
                   function(d) {percents_of_total_als(d$adj_achievement_level, 'achievement.level')}							
       )
-      dt$grade <- rep("0-8", nrow(dt))
+      dt$grade <- rep("0_8", nrow(dt))
       dt$school <- rep("all", nrow(dt))
       d.percs <- rbind(d.percs, dt)
     # and all subjects
       dt <- ddply(df, .(school, test_name),
                   function(d) {percents_of_total_als(d$adj_achievement_level, 'achievement.level')}							
       )
-      dt$grade <- rep("0-8", nrow(dt))
+      dt$grade <- rep("0_8", nrow(dt))
       dt$subject <- rep("all", nrow(dt))
       d.percs <- rbind(d.percs, dt)
       # and all schools and subjects
         dt <- ddply(df, .(test_name),
                     function(d) {percents_of_total_als(d$adj_achievement_level, 'achievement.level')}							
         )
-        dt$grade <- rep("0-8", nrow(dt))
+        dt$grade <- rep("0_8", nrow(dt))
         dt$school <- rep("all", nrow(dt))
         dt$subject <- rep("all", nrow(dt))
         d.percs <- rbind(d.percs, dt)

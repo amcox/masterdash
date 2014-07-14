@@ -43,7 +43,7 @@ perc.and.al <- function(d){
 
 	d.r <- subset(d, type == 'SS')
 	if(nrow(d.r) > 0){
-    if(d$test[1] == "L13"){
+    if(d$test[1] == "L13" || d$test[1] == "L14"){
       nr$scaled.score <- as.numeric(d.r[['value']])
       nr$percent <- NA
     }else{
