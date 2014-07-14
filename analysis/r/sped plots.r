@@ -74,3 +74,35 @@ for (gc in unique(d.percs$grade.category)) {
 		dev.off()	
 	}
 }
+
+# Export spreadsheet of data
+  # With multiple sped categories
+  d.w <- dcast(d.percs, ... ~ achievement.level)
+  d.w$cr <- apply(d.w, 1, function(r) {
+    as.numeric(r['A']) + as.numeric(r['M']) + as.numeric(r['B'])
+  })
+  save_df_as_csv(d.w, "SPED Achievement Level Percents, Multiple Categories")
+
+  # With only sped/gened
+  df.sped <- get_sped_scores_data(con)
+  df.sped$grade.category <- cut_grade_categories(df.sped$grade)
+  df.sped$small.school <- make_small_school_labels(df.sped)
+  # Combine SPED labels
+  df.sped$sped_category <- as.character(df.sped$sped_category)
+  df.sped$sped_category[df.sped$sped_category != 'gened'] <- 'sped'
+  # Make percents by achievement level
+  d.percs <- ddply(df.sped, .(school, grade.category, subject, test_name, sped_category),
+              function(d) {percents_of_total_als(d$adj_achievement_level, 'achievement.level')}							
+  )
+  d.percs.all.s <- ddply(df.sped, .(grade.category, subject, test_name, sped_category),
+              function(d) {percents_of_total_als(d$adj_achievement_level, 'achievement.level')}							
+  )
+  d.percs.all.s$school <- rep("all", nrow(d.percs.all.s))
+  d.l <- rbind(d.percs, d.percs.all.s)
+  d.l <- subset(d.l, subject %in% c("ela", "math")))
+  d.w <- dcast(d.l, school + grade.category + test_name + sped_category ~ achievement.level, fun.aggregate=mean)
+  d.w$cr <- apply(d.w, 1, function(r) {
+    as.numeric(r['A']) + as.numeric(r['M']) + as.numeric(r['B'])
+  })
+  save_df_as_csv(d.w, "SPED Achievement Level Percents, Just GenEd and SPED")
+
