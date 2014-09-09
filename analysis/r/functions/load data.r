@@ -184,3 +184,13 @@ get_sped_scores_data <- function(con) {
 load_report_card_data <- function(){
   read.csv(file="./../Data/rc grades.csv", head=TRUE, na.string=c("", " ", "  ", 'NULL'))
 }
+
+load_student_vam_data <- function(){
+  read.csv(file="./../Data/student vam cleaned.csv", head=TRUE, na.string=c("", " ", "  ", 'NULL'))
+}
+
+load_star_data <- function(){
+  read.csv(file="./../Data/star model data.csv", head=TRUE, na.string=c("", " ", "  ", 'NULL'),
+    stringsAsFactors=F
+  )
+}
