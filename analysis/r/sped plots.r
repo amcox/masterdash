@@ -39,9 +39,9 @@ d.percs <- d.percs[order(as.numeric(d.percs$achievement.level)),]
 # 																	"RCAAK2", "STAK2", "DTAK2", "SCHK2")
 # )
 d.percs$school <- reorder(d.percs$school,
-											new.order=c("RCAA", "STA", "DTA", "SCH")
+											new.order=c("RCAA", "STA", "DTA", "SCH", 'RSP')
 )
-d.percs <- d.percs[order(as.numeric(df.m$school)),]
+d.percs <- d.percs[order(as.numeric(d.percs$school)),]
 d.percs$test_name <- reorder(d.percs$test_name, new.order=test.order)
 
 for (gc in unique(d.percs$grade.category)) {
@@ -67,7 +67,7 @@ for (gc in unique(d.percs$grade.category)) {
 							title=element_text(size=8)
 				)+
 				facet_grid(school ~ test_name)
-		pdf(paste0("./../output/SPED Benchmark Roll-Up ", gc, " ", sub, " 2013-14.pdf"),
+		pdf(paste0("./../output/SPED Benchmark Roll-Up ", gc, " ", sub, " 2014-15.pdf"),
 				width=10.5, height=7
 		)
 		print(p)

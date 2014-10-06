@@ -93,27 +93,27 @@ create_student_school_scores_roll_up <- function(con) {
   dt <- ddply(df, .(school, subject, test_name),
               function(d) {percents_of_total_als(d$adj_achievement_level, 'achievement.level')}							
   )
-  dt$grade <- rep("0_8", nrow(dt))
+  dt$grade <- rep("PK_8", nrow(dt))
   d.percs <- rbind(d.percs, dt)
     # and all schools
       dt <- ddply(df, .(subject, test_name),
                   function(d) {percents_of_total_als(d$adj_achievement_level, 'achievement.level')}							
       )
-      dt$grade <- rep("0_8", nrow(dt))
+      dt$grade <- rep("PK_8", nrow(dt))
       dt$school <- rep("all", nrow(dt))
       d.percs <- rbind(d.percs, dt)
     # and all subjects
       dt <- ddply(df, .(school, test_name),
                   function(d) {percents_of_total_als(d$adj_achievement_level, 'achievement.level')}							
       )
-      dt$grade <- rep("0_8", nrow(dt))
+      dt$grade <- rep("PK_8", nrow(dt))
       dt$subject <- rep("all", nrow(dt))
       d.percs <- rbind(d.percs, dt)
       # and all schools and subjects
         dt <- ddply(df, .(test_name),
                     function(d) {percents_of_total_als(d$adj_achievement_level, 'achievement.level')}							
         )
-        dt$grade <- rep("0_8", nrow(dt))
+        dt$grade <- rep("PK_8", nrow(dt))
         dt$school <- rep("all", nrow(dt))
         dt$subject <- rep("all", nrow(dt))
         d.percs <- rbind(d.percs, dt)

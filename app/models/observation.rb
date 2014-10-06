@@ -8,19 +8,19 @@ class Observation < ActiveRecord::Base
     csv.each do |row|
       teacher = Teacher.where(teacher_number: row[:teacher_number]).first
       if teacher
-        observation = Observation.where(teacher_id: teacher.id, quarter: row[:quarter], year: row[:year]).first_or_create
+        observation = Observation.create(teacher_id: teacher.id, year: row[:year])
         observation.small_school = row[:school]
         observation.observer = row[:observer]
-        observation.date = row[:date]
         observation.score = row[:score]
+        observation.quarter = row[:quarter]
         observation.save
       else
         teacher = Teacher.create(teacher_number: row[:teacher_number], name: row[:teacher_name])
-        observation = Observation.where(teacher_id: teacher.id, quarter: row[:quarter], year: row[:year]).first_or_create
+        observation = Observation.create(teacher_id: teacher.id, year: row[:year])
         observation.small_school = row[:school]
         observation.observer = row[:observer]
-        observation.date = row[:date]
         observation.score = row[:score]
+        observation.quarter = row[:quarter]
         observation.save
       end
     end

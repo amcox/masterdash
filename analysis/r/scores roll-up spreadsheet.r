@@ -16,7 +16,11 @@ df <- create_student_school_scores_roll_up(con)
 
 d.w <- dcast(df, ... ~ achievement.level)
 d.w$cr <- apply(d.w, 1, function(r) {
-  as.numeric(r['A']) + as.numeric(r['M']) + as.numeric(r['B'])
+  if(r['grade'] %in% c('0', '1', '2', '0_2')){
+    as.numeric(r['A']) + as.numeric(r['M'])
+  }else{
+    as.numeric(r['A']) + as.numeric(r['M']) + as.numeric(r['B'])   
+  }
 })
 
-save_df_as_csv(d.w, "Scores Roll-Up 2013-14")
+save_df_as_csv(d.w, "Scores Roll-Up 2014-15")
