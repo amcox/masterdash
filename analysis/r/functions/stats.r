@@ -25,3 +25,8 @@ ordinalized <- function(x) {
 percentile_format <- function(x) {
   ordinalized(round_any(x, .01) * 100)
 }
+
+ecdf_by_group <- function(d, source.col, new.col) {
+  d[[new.col]] <- ecdf(d[[source.col]])(d[[source.col]])
+  return(d)
+}
