@@ -192,25 +192,19 @@ teacher_plot_table_theme <- function(...) {
   }
   
   make_plot_for_teacher_48 <- function(teacher.name, teacher.school, apw, df.se, highlights, t.means, all.stats, output.dir) {
-    make_plot_and_table <- function(teacher.name, apw, df.se, highlights, title.string) {
+    make_plot_and_table_48 <- function(teacher.name, apw, df.se, highlights, title.string) {
       al.table <- make_teacher_al_table_48(teacher.name, apw)
       al.plot <- make_teacher_al_plot_38(teacher.name, df.se, highlights, title.string) + theme(plot.margin = unit(c(0, 0, 0, 0), "lines"))
       p <- arrangeGrob(al.table, al.plot, ncol=2, widths=c(.6, .4))
       return(p)
     }
     
-    
     t.subjects <-subset(apw, teacher_name == teacher.name)$subject
     plots <- sapply(t.subjects, function(x){NULL})
     for(s in t.subjects){
       apw.sub <- subset(apw, subject == s)
       df.se.sub <- subset(df.se, subject == s)
-      plots[[s]] <- make_plot_and_table(teacher.name, apw.sub, df.se.sub, highlights, short_labeller('subject', s))
-    }
-    if(length(t.subjects) > 1){
-      al.rows <- 2
-    }else{
-      al.rows <- 1
+      plots[[s]] <- make_plot_and_table_48(teacher.name, apw.sub, df.se.sub, highlights, short_labeller('subject', s))
     }
     al.set <- do.call(arrangeGrob, c(plots, ncol=1))
        
@@ -218,14 +212,26 @@ teacher_plot_table_theme <- function(...) {
   }
   
   make_plot_for_teacher_3 <- function(teacher.name, teacher.school, apw, df.se, highlights, t.means, all.stats, output.dir) {
-    al.table <- make_teacher_al_table_3(teacher.name, apw)
-    al.plot <- make_teacher_al_plot_38(teacher.name, df.se, highlights)
-    al.set <- arrangeGrob(al.table, al.plot, ncol=2)
+    make_plot_and_table_3 <- function(teacher.name, apw, df.se, highlights, title.string) {
+      al.table <- make_teacher_al_table_3(teacher.name, apw)
+      al.plot <- make_teacher_al_plot_38(teacher.name, df.se, highlights, title.string) + theme(plot.margin = unit(c(0, 0, 0, 0), "lines"))
+      p <- arrangeGrob(al.table, al.plot, ncol=2, widths=c(.6, .4))
+      return(p)
+    }
     
-    make_plot_for_teacher(teacher.name, teacher.school, t.means, all.stats, output.dir, al.set)
+    t.subjects <-subset(apw, teacher_name == teacher.name)$subject
+    plots <- sapply(t.subjects, function(x){NULL})
+    for(s in t.subjects){
+      apw.sub <- subset(apw, subject == s)
+      df.se.sub <- subset(df.se, subject == s)
+      plots[[s]] <- make_plot_and_table_3(teacher.name, apw.sub, df.se.sub, highlights, short_labeller('subject', s))
+    }
+    al.set <- do.call(arrangeGrob, c(plots, ncol=1))
+        
+    make_plot_for_teacher(teacher.name, teacher.school, t.means, all.stats, output.dir, al.set, length(t.subjects))
   }
   
-  run_plots_for_small_school <- function(ss, ts.with.ss, plot.fun, apw, df.se, highlights, t.heans, all.stats, output.dir) {
+  run_plots_for_small_school <- function(ss, ts.with.ss, plot.fun, apw, df.se, highlights, t.means, all.stats, output.dir) {
     ss.ts <- subset(ts.with.ss, small.school == ss)
     teachers <- unique(ss.ts$teacher_name)
     lapply(teachers, plot.fun, teacher.school=ss, apw=apw, df.se=df.se,
@@ -256,7 +262,7 @@ teacher_plot_table_theme <- function(...) {
   # 4-8 roll-up data
   df.se.48 <- subset(df.se, grade > 3)
     # Test teachers
-    df.se.48 <- subset(df.se.48, teacher_name %in% c('Chestnut, Darian', 'Chase, Cori'))
+    # df.se.48 <- subset(df.se.48, teacher_name %in% c('Chestnut, Darian', 'Chase, Cori'))
   ap <- df.se.48 %>% group_by(teacher_name, test_name, subject) %>% summarize(perc.b = mean(achievement_level %in% c('A', 'M', 'B')))
   apw <- spread(ap, test_name, perc.b)
   apw <- apw %>% mutate(l.to.b1 = B1 - L14)
@@ -266,9 +272,9 @@ teacher_plot_table_theme <- function(...) {
   
   # 3 roll-up data
   df.se.3 <- subset(df.se, grade == 3)
-  ap <- df.se.3 %>% group_by(teacher_name, test_name) %>% summarize(perc.b = mean(achievement_level %in% c('A', 'M', 'B')))
+  ap <- df.se.3 %>% group_by(teacher_name, test_name, subject) %>% summarize(perc.b = mean(achievement_level %in% c('A', 'M', 'B')))
   apw <- spread(ap, test_name, perc.b)
-  apw$B1.percile <- ecdf(apw$B1)(apw$B1)
+  apw <- apw %>% group_by(subject) %>% do(ecdf_by_group(., 'B1', 'B1.percile'))
   apw.3 <- apw
 
 
@@ -277,11 +283,11 @@ teachers <- unique(df.se.48$teacher_name)
 teacher.small.schools <- df.se.48 %>% group_by(teacher_name, school) %>% summarize(grade = max(grade))
 teacher.small.schools$small.school <- apply(teacher.small.schools, 1, make_small_school)
 small.schools <- unique(teacher.small.schools$small.school)
-lapply(small.schools, run_plots_for_small_school, teacher.small.schools, make_plot_for_teacher_48, apw.48, df.se.48, highlights, t.heans, all.stats, output.dir)
+lapply(small.schools, run_plots_for_small_school, teacher.small.schools, make_plot_for_teacher_48, apw.48, df.se.48, highlights, t.means, all.stats, output.dir)
 
 # Plot 3
 teachers <- unique(df.se.3$teacher_name)
 teacher.small.schools <- df.se.3 %>% group_by(teacher_name, school) %>% summarize(grade = max(grade))
 teacher.small.schools$small.school <- apply(teacher.small.schools, 1, make_small_school)
 small.schools <- unique(teacher.small.schools$small.school)
-lapply(small.schools, run_plots_for_small_school, teacher.small.schools, make_plot_for_teacher_3, apw.3, df.se.3, highlights, t.heans, all.stats, output.dir)
+lapply(small.schools, run_plots_for_small_school, teacher.small.schools, make_plot_for_teacher_3, apw.3, df.se.3, highlights, t.means, all.stats, output.dir)
