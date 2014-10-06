@@ -260,8 +260,8 @@ teacher_plot_table_theme <- function(...) {
   ap <- df.se.48 %>% group_by(teacher_name, test_name, subject) %>% summarize(perc.b = mean(achievement_level %in% c('A', 'M', 'B')))
   apw <- spread(ap, test_name, perc.b)
   apw <- apw %>% mutate(l.to.b1 = B1 - L14)
-  apw$l.to.b1.percile <- ecdf(apw$l.to.b1)(apw$l.to.b1)
-  apw$B1.percile <- ecdf(apw$B1)(apw$B1)
+  apw <- apw %>% group_by(subject) %>% do(ecdf_by_group(., 'l.to.b1', 'l.to.b1.percile'))
+  apw <- apw %>% group_by(subject) %>% do(ecdf_by_group(., 'B1', 'B1.percile'))
   apw.48 <- apw
   
   # 3 roll-up data
