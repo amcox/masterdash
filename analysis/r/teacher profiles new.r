@@ -91,6 +91,7 @@ teacher_plot_table_theme <- function(...) {
     p.bars <- ggplot()+
     	geom_bar(data=subset(d.props, achievement_level != 'U'), aes(x=test, y=perc, fill=achievement_level), stat="identity")+
     	geom_bar(data=highlights, aes(x=test, y=perc), fill="white", stat="identity", alpha=.4)+
+      geom_text(data=b.above, aes(label=round(perc * 100, digits=0), x=test_name, y=(perc + 0.03)), size=2)+
     	scale_x_discrete(limits=test.order)+
     	scale_y_continuous(labels=percent, breaks=seq(0,1,.1))+
     	scale_fill_manual(values=alPalette.light.lows, guide=F)+
