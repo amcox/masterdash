@@ -1,0 +1,22 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1.15 in]{geometry}
+<<loaddata, echo=FALSE, message=FALSE>>=
+subgroup <- df[ df$Hospital == hosp,]
+@
+
+\begin{document}
+<<setup, echo=FALSE >>=
+  opts_chunk$set(fig.path = paste("test", hosp , sep=""))
+@
+
+Some infomative text about hospital \Sexpr{hosp}
+
+<<plots, echo=FALSE >>=
+  for(ward in unique(subgroup$Ward)){
+    subgroup2 <- subgroup[subgroup$Ward == ward,]
+    #     subgroup2 <- subgroup2[ order(subgroup2$Month),]
+    savename <- paste(hosp, ward)
+    plot(subgroup2$Month, subgroup2$Outcomes, type="o", main=paste("Trend plot for", savename))
+  }
+@
+\end{document}

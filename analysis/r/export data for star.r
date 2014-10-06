@@ -10,4 +10,4 @@ con <- prepare_connection()
 
 df <- get_single_score_per_student_with_student_data(con)
 
-save_df_as_csv(df, 'leap data')
+save_df_as_csv(df, 'scores data')

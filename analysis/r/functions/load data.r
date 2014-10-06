@@ -189,8 +189,14 @@ load_student_vam_data <- function(){
   read.csv(file="./../Data/student vam cleaned.csv", head=TRUE, na.string=c("", " ", "  ", 'NULL'))
 }
 
-load_star_data <- function(){
+load_star_model_data <- function(){
   read.csv(file="./../Data/star model data.csv", head=TRUE, na.string=c("", " ", "  ", 'NULL'),
+    stringsAsFactors=F
+  )
+}
+
+load_star_raw_data <- function(){
+  read.csv(file="./../Data/star raw data.csv", head=TRUE, na.string=c("", " ", "  ", 'NULL'),
     stringsAsFactors=F
   )
 }

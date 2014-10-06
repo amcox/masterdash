@@ -18,30 +18,41 @@ update_functions <- function() {
 update_functions()
 
 multi_test_by_subjects_bar_plot <- function(d, s) {
-  ggplot(d, aes(x=test_name, y=perc, fill=achievement.level))+
-  		geom_bar(stat="identity")+
-  		scale_x_discrete(limits=test.order)+
-  		scale_y_continuous(labels=percent, breaks=seq(0,1,.1))+
-  		scale_fill_manual(values=alPalette, guide=F)+
-  		ylab("Percent of Scores")+
-  		xlab("Assessment")+
-  		labs(title=paste0(long_labeller("subject", s), " 2013-14 Benchmark Scores by Subject and Grade"))+
-  		facet_grid(school ~ grade, labeller=short_labeller)+
-  		theme_bw()+
-  		theme(axis.text.x=element_text(size=5, angle=90, vjust=0.5),
-  					axis.text.y=element_text(size=6)
-  		)
+  ggplot()+
+		geom_bar(data=d, aes(x=test_name, y=perc, fill=achievement.level), stat="identity")+
+    geom_text(data=d.cr, aes(label=round(perc.cr * 100, digits=0), x=test_name, y=perc.cr + .03), size=2)+
+		scale_x_discrete(limits=test.order)+
+		scale_y_continuous(labels=percent, breaks=seq(0,1,.1), limits=c(0,1.05))+
+		scale_fill_manual(values=alPalette.light.lows, guide=F)+
+		labs(title=paste0(long_labeller("subject", s), " 2014-15 Benchmark Scores by Subject and Grade"),
+      x='Assessment',
+      y='Percent of Scores'
+    )+
+		facet_grid(school ~ grade, labeller=short_labeller)+
+		theme_bw()+
+		theme(axis.text.x=element_text(size=5, angle=90, vjust=0.5),
+					axis.text.y=element_text(size=6)
+		)
 }
 
 con <- prepare_connection()
 df <- create_student_school_scores_roll_up(con)
 
 for (s in subjects.order){
-  df.s <- subset(df, subject == s & grade %in% plain.grades)
+  df.s <- subset(df, subject == s & grade %in% plain.grades.nok2 & achievement.level != 'U')
+  d.cr <- df.s %>% group_by(school, grade, subject, test_name) %>% do(b_and_above(.))
 	p <- multi_test_by_subjects_bar_plot(df.s, s)
-  save_plot_as_pdf(p, paste0(long_labeller("subject", s), " 2013 Benchmark Scores, Single Grades"))
+  save_plot_as_pdf(p, paste0(long_labeller("subject", s), " 2014-15 Benchmark Scores, 3-8 Single Grades"))
 	
-	df.s <- subset(df, subject == s & grade %in% total.grades)
+	df.s <- subset(df, subject == s & grade %in% total.grades.nok2 & achievement.level != 'U')
+  d.cr <- df.s %>% group_by(school, grade, subject, test_name) %>% do(b_and_above(.))
 	p <- multi_test_by_subjects_bar_plot(df.s, s)
-  save_plot_as_pdf(p, paste0(long_labeller("subject", s), " 2013 Benchmark Scores, Small Schools"))
+  save_plot_as_pdf(p, paste0(long_labeller("subject", s), " 2014-15 Benchmark Scores, 3-8 Small Schools"))
+  
+	if(s != 'soc'){
+    df.s <- subset(df, subject == s & grade %in% k2.grades & achievement.level != 'U')
+    d.cr <- df.s %>% group_by(school, grade, subject, test_name) %>% do(m_and_above(.))
+  	p <- multi_test_by_subjects_bar_plot(df.s, s) + scale_fill_manual(values=alPalette.light.lows.k2, guide=F)
+    save_plot_as_pdf(p, paste0(long_labeller("subject", s), " 2014-15 Benchmark Scores, PK-2"))
+	}
 }

@@ -41,7 +41,7 @@ SELECT
   ce.instruction_type class_type,
 	'FALSE' fay,
 	'TRUE' "current",
-	2014 "year"
+	2015 "year"
 FROM cc
 JOIN students s ON cc.studentID = s.id
 LEFT JOIN u_def_ext_students se ON se.studentsdcid = s.dcid
@@ -52,10 +52,10 @@ JOIN courses c ON cc.course_number = c.course_number
 LEFT JOIN u_def_ext_courses ce ON ce.coursesdcid = c.dcid
 JOIN schools sch ON cc.schoolid = sch.school_number
 JOIN sections sec ON sec.id = cc.sectionid
--- WHERE cc.dateenrolled <= CURRENT_DATE
--- AND cc.dateleft > CURRENT_DATE
-WHERE cc.dateenrolled <= TO_DATE('2014-04-07', 'YYYY-MM-DD')
-AND cc.dateleft > TO_DATE('2014-04-07', 'YYYY-MM-DD')
-AND s.grade_level > -1
-AND sch.school_number IN (1,2,3,6)
+WHERE cc.dateenrolled <= CURRENT_DATE
+AND cc.dateleft > CURRENT_DATE
+-- WHERE cc.dateenrolled <= TO_DATE('2014-04-07', 'YYYY-MM-DD')
+-- AND cc.dateleft > TO_DATE('2014-04-07', 'YYYY-MM-DD')
+AND s.grade_level > -3
+AND sch.school_number IN (1,2,3,6,369701)
 AND ce.instruction_type = 'Core'
