@@ -12,6 +12,8 @@
   
   Run the query 'student export.sql' in SQLDeveloper and export the result as
   'students\_import.csv'. No modification needed.
+  
+    ActiveRecord::Base.logger.level = 1
 
     Student.import('csvs/students_import.csv')
   
