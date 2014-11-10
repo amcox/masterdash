@@ -15,10 +15,19 @@
 /log/*.log
 /tmp
 
+config/database.yml
+
 /backups
 
-analysis/graphs
-analysis/output
-analysis/data
-analysis/spreadsheets
-/csvs
+analysis/graphs/*
+analysis/output/*
+analysis/data/*
+analysis/spreadsheets/*
+/csvs/**/*.csv
+/csvs/old
+
+!.gitkeep
+!analysis/output/new\ teacher\ profiles
+analysis/output/new\ teacher\ profiles/**/*.pdf
+.Rhistory
+.Rdata
