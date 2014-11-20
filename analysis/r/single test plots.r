@@ -24,7 +24,7 @@ single_test_bar_percs_plot <- function(d, d.cr, test.name.str) {
   		scale_x_discrete(limits=schools)+
   		scale_y_continuous(labels=percent, breaks=seq(0,1,.1), limits=c(0,1.05))+
   		scale_fill_manual(values=alPalette.light.lows, guide=F)+
-  		labs(title=paste0("2014 ", test.name.str, " Scores"),
+  		labs(title=paste0("2014-15 ", test.name.str, " Scores"),
         x='School',
         y='Percent of Scores'
       )+
