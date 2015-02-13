@@ -10,7 +10,7 @@ class Observation < ActiveRecord::Base
       if teacher
         observation = Observation.create(teacher_id: teacher.id, year: row[:year])
         observation.small_school = row[:school]
-        observation.observer = row[:observer]
+        # observation.observer = row[:observer]
         observation.score = row[:score]
         observation.quarter = row[:quarter]
         observation.save
@@ -18,7 +18,7 @@ class Observation < ActiveRecord::Base
         teacher = Teacher.create(teacher_number: row[:teacher_number], name: row[:teacher_name])
         observation = Observation.create(teacher_id: teacher.id, year: row[:year])
         observation.small_school = row[:school]
-        observation.observer = row[:observer]
+        # observation.observer = row[:observer]
         observation.score = row[:score]
         observation.quarter = row[:quarter]
         observation.save

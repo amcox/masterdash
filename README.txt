@@ -1,26 +1,28 @@
 #Import Procedure
 
-1. **Date Enrollments**
+First, do the steps below on the local development database.
 
-    Enrollment.delete_all
+1. **Delete Enrollments**
+
+    `Enrollment.delete_all`
   
 2. **Delete Observations**
 
-    Observation.delete_all
+    `Observation.delete_all`
+    
+3. Set logger to 1 to hide SQL
+
+  `ActiveRecord::Base.logger.level = 1`
   
 3. **Import Students**
   
   Run the query 'student export.sql' in SQLDeveloper and export the result as
   'students\_import.csv' to '/csvs'. No modification needed.
   
-  Set the logger to 1 so that you can see the progress bar.
-    
-    ActiveRecord::Base.logger.level = 1
-    
-  Run the student import method. This should import new students, update existing
-  ones, and delete ones no longer included in the file.
+  Run the student import method. This should import new students,
+  update existing ones, and delete ones no longer included in the file.
 
-    Student.import('csvs/students_import.csv')
+    `Student.import('csvs/students_import.csv')`
   
 4. **Import Teachers**
 
@@ -32,20 +34,16 @@
   
   Run the teacher import method.
 
-    Teacher.import('csvs/teachers_import.csv')
+    `Teacher.import('csvs/teachers_import.csv')`
   
 5. **Update Enrollments**
 
   Run the query 'cc export query.sql' in SQLDeveloper and export the result as
   'enrollments_import.csv' to '/csvs'. No modification needed.
-
-  Make sure the logger is set to 1 to see the progress bar.
-  
-    ActiveRecord::Base.logger.level = 1
     
   Run the import method.
     
-    Enrollment.import('csvs/enrollments_import.csv')
+    `Enrollment.import('csvs/enrollments_import.csv')`
     
   Any enrollments that are not successfully created will be echoed back with
   some true/false information about the source of the error. Check the import
@@ -67,13 +65,9 @@
   'raw' directory with the 'leap.csv' file, format the data for import, and save
   to the 'csvs' directory as 'scores\_import.csv'. No modification is needed.
   
-  Make sure the logger is set to 1 to see the progress bar.
-    
-    ActiveRecord::Base.logger.level = 1
-    
   Run the scores import method.
   
-    Score.import('csvs/scores_import.csv')
+    `Score.import('csvs/scores_import.csv')`
   
 7. **Observations imported**
 
@@ -97,5 +91,21 @@
       * score
       * year
       * quarter
+      
+  This most recent time (2/13/15) I got a spreadsheet from Gabe that had the quarterly observation scores for teachers. I checked those names against the teachers_import sheet to find any matching teacher_numbers, then just assigned IDs based on names for those that didn't match. I processed that file through the Observations repo with the 'export for masterdash' file to create long data. The result can be imported, even without the observer column.
 
-    Observation.import('csvs/observations_import.csv')
+    `Observation.import('csvs/observations_import.csv')`
+    
+Then, use the following commands to update the AWS database with a copy of the local version.
+
+    # Drop the existing database from AWS
+    dropdb masterdash -h masterdashcurrent.cmyogvwshjn6.us-west-2.rds.amazonaws.com -p 5432 -U masteruser
+
+    # Create a new DB on AWS from a local dump
+    createdb -h masterdashcurrent.cmyogvwshjn6.us-west-2.rds.amazonaws.com -p 5432 -U masteruser -T template0 masterdash
+
+    # Pipe local data onto the AWS server
+    # (might need to change the hostname for the local db)
+    pg_dump -d masterdash_development -h /var/pgsql_socket | psql -h masterdashcurrent.cmyogvwshjn6.us-west-2.rds.amazonaws.com -p 5432 -U masteruser -d masterdash
+    
+The analysis ca be run from either db, using an option in the create connection function, `prepare_connection(aws=T)`. If using AWS, manually set the variable 'aws_password' in R to be the AWS password before running analysis code.
