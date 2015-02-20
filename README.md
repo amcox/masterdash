@@ -108,4 +108,4 @@ Then, use the following commands to update the AWS database with a copy of the l
     # (might need to change the hostname for the local db)
     pg_dump -d masterdash_development -h /var/pgsql_socket | psql -h masterdashcurrent.cmyogvwshjn6.us-west-2.rds.amazonaws.com -p 5432 -U masteruser -d masterdash
     
-The analysis ca be run from either db, using an option in the create connection function, `prepare_connection(aws=T)`. If using AWS, manually set the variable 'aws_password' in R to be the AWS password before running analysis code.
+The analysis can be run from either db, using an option in the create connection function, `prepare_connection(aws=T)`. If using AWS, manually set the variable 'aws.password' in R to be the AWS password before running analysis code.

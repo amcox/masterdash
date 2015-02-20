@@ -25,6 +25,7 @@ analysis/data/*
 analysis/spreadsheets/*
 /csvs/**/*.csv
 /csvs/old
+analysis/r/functions/secrets.r
 
 !.gitkeep
 !analysis/output/new\ teacher\ profiles
