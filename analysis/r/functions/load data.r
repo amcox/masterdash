@@ -1,6 +1,6 @@
 library(RPostgreSQL)
 
-prepare_connection <- function(aws=F){
+prepare_connection <- function(aws=F, user_name=NA, pw=NA){
   if(aws) {
     drv <- dbDriver("PostgreSQL")
     con <- dbConnect(drv, dbname="masterdash",
@@ -12,7 +12,7 @@ prepare_connection <- function(aws=F){
     return(con)
   }else{
     drv <- dbDriver("PostgreSQL")
-    con <- dbConnect(drv, dbname="masterdash_development", host="localhost", port=5432)
+    con <- dbConnect(drv, dbname="masterdash_development", host="localhost", port=5432, user=user, password=pw)
     return(con)
   }
 }
