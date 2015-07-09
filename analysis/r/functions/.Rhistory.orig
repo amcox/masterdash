@@ -550,6 +550,100 @@ head(d)
 unique(d)
 mean(d$value)
 sd(d$value)
+<<<<<<< HEAD
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+update_functions <- function() {#
+	old.wd <- getwd()#
+	setwd("functions")#
+	sapply(list.files(), source)#
+	setwd(old.wd)#
+}#
+update_functions()#
+#
+d <- load_obs_export()
+str(d)
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+library(lubridate)
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+d$observedat <- mdy(d$observedat)
+str(d)
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+ggplot(d, aes(x=observedat))+#
+  geom_hist()
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+library(ggplot2)
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+ggplot(d, aes(x=observedat))+#
+  geom_hist()
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+ggplot(d, aes(x=observedat))+#
+  geom_histogram()
+?rank()
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+do <- d %>% group_by(observee) %>% arrange(observedat) %>% mutate(ord = rank())
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+library(dplyr)
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+do <- d %>% group_by(observee) %>% arrange(observedat) %>% mutate(ord = rank())
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+do <- d %>% group_by(observee) %>% arrange(observedat) %>% mutate(ord = rank(observedat))
+str(do)
+hed(do)
+hed(do)
+head(do)
+do[, 1:5]
+do[1:5]
+do[1:5,]
+data.frame(do[1:5,]
+)
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+do <- d %>% arrange(observee, observedat) %>% group_by(observee) %>% mutate(ord = rank(observedat))
+head(do)
+data.frame(do[1:5,])
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+ggplot(do, aes(x=observedat, y=ord))+#
+  geom_point()
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+ggplot(do, aes(x=observedat, y=ord))+#
+  geom_boxplot()
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+ggplot(do, aes(x=week(observedat), y=ord))+#
+  geom_boxplot()
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+week(do$observedat)
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+ggplot(do, aes(x=week(observedat), y=ord))+#
+  geom_boxplot()
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+ggplot(do, aes(x=factor(week(observedat)), y=ord))+#
+  geom_boxplot()
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+ggplot(do, aes(x=observedat, y=ord))+#
+  geom_point()
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+ggplot(do, aes(y=observedat, x=ord))+#
+  geom_point()
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+ggplot(do, aes(y=observedat, x=ord))+#
+  geom_boxplot()
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+ggplot(do, aes(y=observedat, x=factor(ord)))+#
+  geom_boxplot()
+?rank()
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+do <- d %>% arrange(observee, observedat) %>% group_by(observee) %>% mutate(ord = rank(observedat, tie.method='min'))#
+#
+ggplot(do, aes(y=observedat, x=factor(ord)))+#
+  geom_boxplot()
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+do <- d %>% arrange(observee, observedat) %>% group_by(observee) %>% mutate(ord = rank(observedat, ties.method='min'))#
+#
+ggplot(do, aes(y=observedat, x=factor(ord)))+#
+  geom_boxplot()
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+library(dplyr)#
+library(tidyr)#
+=======
 setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/masterdash/csvs/scores')
 library(stringr)#
 library(dplyr)#
@@ -725,6 +819,7 @@ library(reshape2)#
 library(ggplot2)#
 library(scales)#
 library(gridExtra)#
+>>>>>>> c5c9023cf2557bb5baf7b13294012023ec9ee1ea
 #
 update_functions <- function() {#
 	old.wd <- getwd()#
@@ -734,6 +829,28 @@ update_functions <- function() {#
 }#
 update_functions()#
 #
+<<<<<<< HEAD
+d <- load_quarterly_mod()
+str(d)
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+dl <- d %>% gather(quarter, score, x1:x4)
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+dl <- d %>% gather(quarter, score, x1:x2)
+str(dl)
+head(dl)
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+library(stringr)
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+dl$quarter <- str_replace_all(dl$quarter, 'x', '')
+head(dl)
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/Observations/R')
+save_df_as_csv(dl, 'observations_import')
+?dbConnect
+setwd('/Users/Andrew/Dropbox/ReNew/Data Analysis/masterdash/analysis/R/functions')
+library(RPostgreSQL)
+dbConnect
+?dbConnect
+=======
 single_test_bar_percs_plot <- function(d, test.name.str) {#
   ggplot(d, aes(x=school, y=perc, fill=achievement.level))+#
   		geom_bar(stat="identity")+#
@@ -761,3 +878,4 @@ for (t in test.order){#
 	p <- single_test_bar_percs_plot(df.t, t)#
   save_plot_as_pdf(p, paste0("2014-15 ", t, " Scores by Small Schools"))#
 }
+>>>>>>> c5c9023cf2557bb5baf7b13294012023ec9ee1ea

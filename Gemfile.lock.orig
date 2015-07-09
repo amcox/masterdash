@@ -162,9 +162,14 @@ GEM
       ffi (>= 0.5.0)
     rdoc (4.1.2)
       json (~> 1.4)
+<<<<<<< HEAD
+    ruby-progressbar (1.4.0)
+    sass (3.2.12)
+=======
     retriable (1.4.1)
     ruby-progressbar (1.6.1)
     sass (3.4.6)
+>>>>>>> c5c9023cf2557bb5baf7b13294012023ec9ee1ea
     sass-rails (4.0.1)
       railties (>= 4.0.0, < 5.0)
       sass (>= 3.1.10)
