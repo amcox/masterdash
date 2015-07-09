@@ -35,7 +35,7 @@ single_test_bar_percs_plot <- function(d, d.cr, test.name.str) {
   		)
 }
 
-con <- prepare_connection(aws=T)
+con <- prepare_connection(aws=)
 df <- create_student_school_scores_roll_up(con)
 
 for (t in test.order){

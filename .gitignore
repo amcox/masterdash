@@ -32,3 +32,5 @@ analysis/r/functions/secrets.r
 analysis/output/new\ teacher\ profiles/**/*.pdf
 .Rhistory
 .Rdata
+.Rapp.history
+.DS_Store
