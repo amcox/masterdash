@@ -1,5 +1,5 @@
 # Generate teacher profile PDFs for each teacher
-library(plyr)
+library(dplyr)
 library(gdata)
 library(reshape2)
 library(ggplot2)
@@ -36,18 +36,14 @@ df.e <- get_enrollments_data(con)
 df.star.e <- merge(df.star, df.e, by.x="StudentId", by.y="student_number")
 df.students <- get_students_data(con)
 df.star.s <- merge(df.star, df.students, by.x="StudentId", by.y="student_number")
-d.star.means <- ddply(df.star.s, .(subject.x, subject.y, grade.y), summarize,
-											mean=mean(last.modeled.gap, na.rm=T),
-											sd=sd(last.modeled.gap, na.rm=T)
-)
+d.star.means <- df.star.s %>% group_by(subject.x, subject.y, grade.y) %>%
+	summarize(mean = mean(last.modeled.gap, na.rm=T), sd = sd(last.modeled.gap, na.rm=T))
 
 # Get observation data
 df.obs <- get_observation_data(con)
 df.obs$quarter <- factor(df.obs$quarter)
-all.obs.means <- ddply(df.obs, .(quarter), summarize,
-										mean=mean(score, na.rm=T),
-										sd=sd(score, na.rm=T)	
-)
+all.obs.means <- df.obs %>% group_by(quarter) %>%
+	summarize(mean = mean(score, na.rm=T), sd = sd(score, na.rm=T))
 all.obs.means$small_school <- "Network"
 
 # Do the actual plotting for each teacher
@@ -77,9 +73,7 @@ se.t.c$perc_or_al_num <- apply(se.t.c, 1, function(r){
     return(as.numeric(r['percent']))
   }
 })
-d.props <- ddply(se.t.c, .(), function(d){
-	data.frame(prop.table(table(d$test_name, d$achievement_level), 1))
-})
+d.props <- se.t.c %>% do(data.frame(prop.table(table(.$test_name, .$achievement_level), 1)))
 names(d.props) <- c('foo', "test", "achievement_level", "perc")
 d.props <- d.props[, names(d.props) != 'foo']
 d.props$achievement_level <- reorder(d.props$achievement_level,
@@ -89,7 +83,7 @@ d.props <- d.props[order(as.numeric(d.props$achievement_level)),]
 d.props <- subset(d.props, test %in% c('L13', 'B1', 'B2', 'B3'))
 
 b.above <- subset(d.props, achievement_level %in% c("A", "M", "B"))
-b.above <- ddply(b.above, .(test), summarize, perc=sum(perc))
+b.above <- b.above %>% group_by(test) %>% summarize(perc = sum(perc))
 
 p.bars <- ggplot()+
 	geom_bar(data=subset(d.props, achievement_level != 'U'), aes(x=test, y=perc, fill=reorder(achievement_level, new.order=c("A", "M", "B", "AB", "U"))), stat="identity")+
@@ -139,9 +133,7 @@ p.obs <- ggplot()+
   
 # STAR Plot gap growth hist
 d.star <- subset(star.data, teacher_name==teacher.name)
-t.means <- ddply(d.star, .(subject.x), summarize,
-											mean=mean(modeled.year.gap.growth, na.rm=T)
-)
+t.means <- d.star %>% group_by(subject.x) %>% summarize(mean = mean(modeled.year.gap.growth, na.rm=T))
 ggplot(d.star, aes(x=modeled.year.gap.growth))+
 	geom_bar(aes(y = ..density..), colour="black", binwidth=1)+
   geom_vline(data=t.means, mapping=aes(xintercept=mean), color="red")+
@@ -160,9 +152,8 @@ ggplot(d.star, aes(x=modeled.year.gap.growth))+
   
 # STAR Plot gap growth hist
 d.star <- subset(star.data, teacher_name==teacher.name)
-t.means <- ddply(d.star, .(subject.x), summarize,
-											mean=mean(modeled.year.gap.growth, na.rm=T)
-)
+t.means <- d.star %>% group_by(subject.x) %>%
+	summarize(mean = mean(modeled.year.gap.growth, na.rm=T))
 ggplot(d.star, aes(x=modeled.year.gap.growth))+
 	geom_bar(aes(y = ..density..), colour="black", binwidth=1)+
   geom_vline(data=t.means, mapping=aes(xintercept=mean), color="red")+

@@ -1,4 +1,4 @@
-library(plyr)
+library(dplyr)
 library(dplyr)
 library(gdata)
 library(reshape2)
@@ -15,23 +15,26 @@ update_functions <- function() {
 update_functions()
 
 make_score_matches <- function(d, id.vars=c('student_number', "school", "grade", "subject", 'achievement_level')) {
-  firsts <- subset(d, test_name == 'L13')[, id.vars]
+  firsts <- subset(d, test_name == 'L14')[, id.vars]
   # Rename the last column as 'first_al'
   names(firsts)[names(firsts)==names(firsts)[length(names(firsts))]] <- 'first_al'
-  seconds <- subset(d, test_name == 'L14')[, id.vars]
+  seconds <- subset(d, test_name == 'B1')[, id.vars]
   # Rename the last column as 'second_al'
   names(seconds)[names(seconds)==names(seconds)[length(names(seconds))]] <- 'second_al'
   b <- merge(firsts, seconds)
   return(b)
 }
+calculate_movement_counts <- function(d, al.nums=leap.al.nums){
+	movement_counts(d$first_al, d$second_al, al.nums)
+}
 
-con <- check_for_con_and_create()
+con <- prepare_connection(aws=T)
 df <- get_single_score_per_student_with_student_data(con)
 
 # Run for i/LEAP
 df.leap <- drop.levels(subset(df, achievement_level %in% leap.als))
 d.matches <- make_score_matches(df.leap)
-d <- ddply(d.matches, .(school, grade, subject), function(d){movement_counts(d$first_al, d$second_al)})
+d <- d.matches %>% group_by(school, grade, subject) %>% do(calculate_movement_counts(.))
 d <- drop.levels(d)
 d$first <- reorder(d$first, new.order=leap.als)
 d$second <- reorder(d$second, new.order=leap.als)
@@ -50,7 +53,7 @@ df.laa2 <- drop.levels(subset(df, achievement_level %in% laa2.als))
 d.matches <- make_score_matches(df.laa2)
 d.matches$grade <- cut_grade_categories(d.matches$grade)
 d.matches <- drop.levels(d.matches)
-d <- ddply(d.matches, .(school, grade, subject), function(d){movement_counts(d$first_al, d$second_al, al.nums=laa2.al.nums)})
+d <- d.matches %>% group_by(school, grade, subject) %>% do(calculate_movement_counts(., al.nums=laa2.al.nums))
 d <- drop.levels(d)
 d$first <- reorder(d$first, new.order=laa2.als)
 d$second <- reorder(d$second, new.order=laa2.als)
@@ -63,7 +66,7 @@ for(s in plain.schools){
   }
 }
   # Run combined for network
-  d <- ddply(d.matches, .(subject), function(d){movement_counts(d$first_al, d$second_al, al.nums=laa2.al.nums)})
+	d <- d.matches %>% group_by(subject) %>% do(calculate_movement_counts(., al.nums=laa2.al.nums))
   d <- drop.levels(d)
   d$first <- reorder(d$first, new.order=laa2.als)
   d$second <- reorder(d$second, new.order=laa2.als)
@@ -76,7 +79,7 @@ df.laa1 <- drop.levels(subset(df, achievement_level %in% laa1.als))
 d.matches <- make_score_matches(df.laa1)
 d.matches$grade <- cut_grade_categories(d.matches$grade)
 d.matches <- drop.levels(d.matches)
-d <- ddply(d.matches, .(school, grade, subject), function(d){movement_counts(d$first_al, d$second_al, al.nums=laa1.al.nums)})
+d <- d.matches %>% group_by(school, grade, subject) %>% do(calculate_movement_counts(., al.nums=laa1.al.nums))
 d <- drop.levels(d)
 d$first <- reorder(d$first, new.order=laa1.als)
 d$second <- reorder(d$second, new.order=laa1.als)
@@ -92,7 +95,7 @@ for(s in plain.schools){
   }
 }
   # Run combined for network
-  d <- ddply(d.matches, .(subject), function(d){movement_counts(d$first_al, d$second_al, al.nums=laa1.al.nums)})
+	d <- d.matches %>% group_by(subject) %>% do(calculate_movement_counts(., al.nums=laa1.al.nums))
   d <- drop.levels(d)
   d$first <- reorder(d$first, new.order=laa1.als)
   d$second <- reorder(d$second, new.order=laa1.als)
@@ -106,7 +109,7 @@ df.sped <- get_sped_scores_data(con)
 df.leap <- drop.levels(subset(df.sped, achievement_level %in% leap.als))
 d.matches <- make_score_matches(df.leap, id.vars=c('student_number', "school", "grade", "subject", 'sped_category', 'achievement_level'))
 d.matches$grade <- cut_grade_categories(d.matches$grade)
-d <- ddply(d.matches, .(school, grade, subject, sped_category), function(d){movement_counts(d$first_al, d$second_al)})
+d <- d.matches %>% group_by(school, grade, subject, sped_category) %>% do(calculate_movement_counts(.))
 d <- drop.levels(d)
 d$first <- reorder(d$first, new.order=leap.als)
 d$second <- reorder(d$second, new.order=leap.als)

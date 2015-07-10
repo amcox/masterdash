@@ -1,5 +1,5 @@
 # Generate teacher profile PDFs for each teacher
-library(plyr)
+library(dplyr)
 library(dplyr)
 library(gdata)
 library(reshape2)

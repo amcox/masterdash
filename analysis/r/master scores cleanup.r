@@ -1,5 +1,5 @@
 library(gdata)
-library(plyr)
+library(dplyr)
 library(reshape2)
 
 test.order <- c("L13", "M1", "M2", "M3", "B1", "M4", "M5", "B2", "M6", "M7", "B3", "PL", "L14", "B4")
@@ -59,7 +59,7 @@ perc.and.al <- function(d){
 
 	return(as.data.frame(nr))
 }
-df.c <- ddply(df.m, .(Student.Number, test, subject), perc.and.al)
+df.c <- df.m %>% group_by(Student.Number, test, subject) %>% do(perc.and.al(.))
 names(df.c) <- c('student_number', "test", "subject", "scaled_score",
                  "percent", "achievement_level"
 )

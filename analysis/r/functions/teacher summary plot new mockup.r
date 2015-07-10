@@ -23,9 +23,8 @@ teacher.summary.plot.38.mockup <- function(teacher.name, se.data, gsse.data, sta
       return(as.numerics(r['percent']))
     }
   })
-	d.props <- ddply(se.t.c, .(grade, subject), function(d){
-		data.frame(prop.table(table(d$test_name, d$achievement_level), 1))
-	})
+	d.props <- se.t.c %>% group_by(grade, subject) %>%
+		do(data.frame(prop.table(table(.$test_name, .$achievement_level), 1)))
 	names(d.props) <- c("grade", "subject", "test", "achievement_level", "perc")
 	d.props$achievement_level <- reorder(d.props$achievement_level,
 																new.order=c("A", "M", "B", "AB", "U")
@@ -33,7 +32,7 @@ teacher.summary.plot.38.mockup <- function(teacher.name, se.data, gsse.data, sta
 	d.props <- d.props[order(as.numeric(d.props$achievement_level)),]
 	
 	b.above <- subset(d.props, achievement_level %in% c("A", "M", "B"))
-	b.above <- ddply(b.above, .(grade, subject, test), summarize, perc=sum(perc))
+	b.above <- b.above %>% group_by(grade, subject, test) %>% summarize(perc = sum(perc))
 	
 	p.bars <- ggplot()+
 		geom_bar(data=d.props, aes(x=test, y=perc, fill=reorder(achievement_level, new.order=c("A", "M", "B", "AB", "U"))), stat="identity")+
@@ -63,11 +62,13 @@ teacher.summary.plot.38.mockup <- function(teacher.name, se.data, gsse.data, sta
 													achievement_code=c(1, 0.75, 0.5, 0.25, 0, 1, 0.5, 0.25, 0, 1, 0.5, 1)
 	)
 	gsse.data$num.for.z <- apply(gsse.data, 1, make.num.for.z)
-	test.info <- ddply(gsse.data, .(test_name, subject, grade), summarize, overall_mean=mean(num.for.z), sd=sd(num.for.z))
+	test.info <- gsse.data %>% group_by(test_name, subject, grade) %>%
+		summarize(overall_mean = mean(num.for.z, na.rm=T), sd=sd(num.for.z))
 	se.t.c <- se.t[,c("id", "teacher_name", "achievement_level", "subject", "test_name", "grade", "percent", "scaled_score")]
 	se.t.c <- merge(se.t.c, al.numbers)
 	se.t.c$num.for.z <- apply(se.t.c, 1, make.num.for.z)
-	d.mean <- ddply(se.t.c, .(subject, test_name, grade), summarize, average=mean(num.for.z))
+	d.mean <- se.t.c %>% group_by(subject, test_name, grade) %>%
+		summarize(average = mean(num.for.z, na.rm=T))
 	d.mean <- merge(d.mean, test.info)
 	d.mean$z.score <- apply(d.mean, 1, function(r){
 		(as.numeric(r[['average']]) - as.numeric(r[['overall_mean']]))/as.numeric(r[['sd']])
@@ -97,9 +98,8 @@ teacher.summary.plot.38.mockup <- function(teacher.name, se.data, gsse.data, sta
   # STAR plots
   d.star <- subset(star.data, teacher_name==teacher.name)
 	star.plot <- function(d, all.means) {
-		t.means <- ddply(d, .(grade.y, subject.x, subject.y), summarize,
-													mean=mean(last.modeled.gap, na.rm=T)
-		)
+		t.means <- d %>% group_by(grade.y, subject.x, subject.y) %>%
+			summarize(mean = mean(last.modeled.gap, na.rm=T))
 		all.means.sub <- subset(all.means, subject.y %in% unique(d$subject.y) & 
 														subject.x %in% unique(d$subject.x) &
 														grade.y %in% unique(d$grade.y) &

@@ -1,4 +1,4 @@
-library(plyr)
+library(dplyr)
 library(gdata)
 library(reshape2)
 
@@ -31,8 +31,8 @@ df.se$student.sub <- apply(df.se, 1, function(r) {
 })
 df.se <- subset(df.se, student.sub %in% allowed.student.subs)
 
-dsum.ai <- ddply(df.se, .(school, grade, subject, test_name), summarize, ai=mean(ai_points))
-ai.gc <- ddply(df.se, .(school, grade.category, subject, test_name), summarize, ai=mean(ai_points))
+dsum.ai <- df.se %>% group_by(school, grade, subject, test_name) %>% summarize(ai=mean(ai_points, na.rm=T))
+ai.gc <- df.se %>% group_by(school, grade.category, subject, test_name) %>% summarize(ai=mean(ai_points,pp na.rm=T))
 names(ai.gc)[names(ai.gc) == 'grade.category'] <- 'grade'
 dsum.ai <- rbind(dsum.ai, ai.gc)
 dsum.ai$test_name <- factor(dsum.ai$test_name)

@@ -1,5 +1,5 @@
 # Generate plots that compare SPED scores to GenEd score
-library(plyr)
+library(dplyr)
 library(dplyr)
 library(gdata)
 library(reshape2)
@@ -23,9 +23,8 @@ df.sped$grade.category <- cut_grade_categories(df.sped$grade)
 df.sped$small.school <- make_small_school_labels(df.sped)
 
 # Make percents by achievement level
-d.percs <- ddply(df.sped, .(school, grade.category, subject, test_name, sped_category),
-            function(d) {percents_of_total_als(d$adj_achievement_level, 'achievement.level')}							
-)
+d.percs <- df.sped %>% group_by(school, grade.category, subject, test_name, sped_category) %>%
+	do(percents_of_total_als(.$adj_achievement_level, 'achievement.level'))
 
 # Sort the percents
 d.percs$achievement.level <- reorder(d.percs$achievement.level, 
@@ -91,12 +90,10 @@ for (gc in unique(d.percs$grade.category)) {
   df.sped$sped_category <- as.character(df.sped$sped_category)
   df.sped$sped_category[df.sped$sped_category != 'gened'] <- 'sped'
   # Make percents by achievement level
-  d.percs <- ddply(df.sped, .(school, grade.category, subject, test_name, sped_category),
-              function(d) {percents_of_total_als(d$adj_achievement_level, 'achievement.level')}							
-  )
-  d.percs.all.s <- ddply(df.sped, .(grade.category, subject, test_name, sped_category),
-              function(d) {percents_of_total_als(d$adj_achievement_level, 'achievement.level')}							
-  )
+  d.percs <- df.sped %>% group_by(school, grade.category, subject, test_name, sped_category) %>% 
+		do(percents_of_total_als(.$adj_achievement_level, 'achievement.level'))
+  d.percs.all.s <- df.sped %>% group_by(grade.category, subject, test_name, sped_category) %>%
+		do(percents_of_total_als(.$adj_achievement_level, 'achievement.level'))
   d.percs.all.s$school <- rep("all", nrow(d.percs.all.s))
   d.l <- rbind(d.percs, d.percs.all.s)
   d.l <- subset(d.l, subject %in% c("ela", "math")))

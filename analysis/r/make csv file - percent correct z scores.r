@@ -1,6 +1,6 @@
 # Creates and saves a csv that has the percent correct z score for each teacher
 
-library(plyr)
+library(dplyr)
 library(gdata)
 library(reshape2)
 
@@ -15,8 +15,10 @@ update_functions()
 con <- prepare_connection()
 df.se <- get_scores_enrollments_data(con)
 
-test.info <- ddply(df.se, .(test_name, subject, grade), summarize, overall_mean=mean(percent), sd=sd(percent))
-dsum.percent <- ddply(df.se, .(teacher_number, teacher_name, school, subject, test_name, grade), summarize, average=mean(percent))
+test.info <- df.se %>% group_by(test_name, subject, grade) %>%
+	summarize(overall_mean = mean(percent, na.rm=T), sd = sd(percent))
+dsum.percent <- df.se %>% group_by(teacher_number, teacher_name, school, subject, test_name, grade) %>%
+	summarize(average = mean(percent, na.rm=T))
 dsum.percent$test_name <- factor(dsum.percent$test_name)
 dsum.percent$test_name <- reorder(dsum.percent$test_name, new.order=test.order)
 dsum.percent <- merge(dsum.percent, test.info)

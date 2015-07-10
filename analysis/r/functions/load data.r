@@ -26,7 +26,7 @@ check_for_con_and_create <- function(con_to_test=NA){
 
 get_scores_enrollments_data <- function(con=NA){
   scores.enrollments.query <- "SELECT s.*,
-  		e.subject subject,
+  		e.subject enrollment_subject,
   		e.grade grade,
   		e.school school,
   		e.section section,

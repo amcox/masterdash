@@ -1,7 +1,7 @@
 # Makes two files for each test, facted by grade (or grade category) and
 # subject, showing schools as bars.
 
-library(plyr)
+library(dplyr)
 library(dplyr)
 library(gdata)
 library(reshape2)
