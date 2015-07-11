@@ -80,7 +80,8 @@ get_single_score_per_student_with_student_data <- function(con=NA) {
   		e.school school,
   		tests.name test_name,
   		tests.order test_order,
-      st.student_number student_number
+      st.student_number student_number,
+			st.name student_name
   FROM (
   	SELECT student_id,
   		subject,
