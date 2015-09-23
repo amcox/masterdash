@@ -20,7 +20,7 @@ update_functions()
 multi_test_by_subjects_bar_plot_ai <- function(d, s) {
   ggplot()+
 		geom_bar(data=d, aes(x=test_name, y=ai), fill="purple", stat="identity")+
-    geom_text(data=d, aes(label=round(ai, digits=0), x=test_name, y=ai + 3), size=2)+
+    geom_text(data=d, aes(label=round(ai, digits=0), x=test_name, y=ai + 7), size=2)+
 		scale_x_discrete(limits=test.order)+
 		scale_y_continuous(breaks=seq(0,150,20), limits=c(0,150))+
 #		scale_fill_manual(values=alPalette.light.lows, guide=F)+

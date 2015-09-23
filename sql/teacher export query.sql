@@ -12,5 +12,5 @@ JOIN schools sch ON cc.schoolid = sch.school_number
 WHERE cc.dateenrolled <= CURRENT_DATE
 AND cc.dateleft > CURRENT_DATE
 AND s.grade_level > -3
-AND sch.school_number IN (1,2,3,6,369701)
+AND sch.school_number IN (1,2,3,6,7,369701)
 AND ce.instruction_type = 'Core'

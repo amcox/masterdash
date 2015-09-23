@@ -1,4 +1,4 @@
-test.order <- c('L15', 'MLQ1', 'B1', 'MLQ2', 'B2', 'MLQ3', 'MLQ4', 'B3', 'MLQ5', 'L16')
+test.order <- c('L15', 'MLQ1', 'MLQ2', 'B1', 'MLQ3', 'MLQ4', 'B2', 'MLQ5', 'MLQ6', 'B3')
 
 alPalette <- c("A"="#00D77B", "M"="#00BE61", "B"="#198D33", "AB"="#E5E167", "U"="#D16262")
 alPalette.light.lows <- c("A"="#00D77B", "M"="#00BE61", "B"="#198D33", "AB"="#E6E5CF", "U"="#D1BCBC")

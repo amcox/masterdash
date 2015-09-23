@@ -57,5 +57,5 @@ AND cc.dateleft > CURRENT_DATE
 -- WHERE cc.dateenrolled <= TO_DATE('2014-04-07', 'YYYY-MM-DD')
 -- AND cc.dateleft > TO_DATE('2014-04-07', 'YYYY-MM-DD')
 AND s.grade_level > -3
-AND sch.school_number IN (1,2,3,6,369701)
+AND sch.school_number IN (1,2,3,6,7,369701)
 AND ce.instruction_type = 'Core'

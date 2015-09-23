@@ -24,7 +24,7 @@ multi_test_by_subjects_bar_plot <- function(d, s) {
 		scale_x_discrete(limits=test.order)+
 		scale_y_continuous(labels=percent, breaks=seq(0,1,.1), limits=c(0,1.05))+
 		scale_fill_manual(values=alPalette.light.lows, guide=F)+
-		labs(title=paste0(long_labeller("subject", s), " 2014-15 Benchmark Scores by Subject and Grade"),
+		labs(title=paste0(long_labeller("subject", s), " 2015-16 Benchmark Scores by Subject and Grade"),
       x='Assessment',
       y='Percent of Scores'
     )+
@@ -38,21 +38,29 @@ multi_test_by_subjects_bar_plot <- function(d, s) {
 con <- prepare_connection()
 df <- create_student_school_scores_roll_up(con)
 
+
+#Excludes RSP
+df <- subset(df, school != "RSP")
+
+#Orders Schools
+df$school <- reorder(df$school, new.order=schools)
+
+
 for (s in subjects.order){
   df.s <- subset(df, subject == s & grade %in% plain.grades.nok2 & achievement.level != 'U')
   d.cr <- df.s %>% group_by(school, grade, subject, test_name) %>% do(b_and_above(.))
 	p <- multi_test_by_subjects_bar_plot(df.s, s)
-  save_plot_as_pdf(p, paste0(long_labeller("subject", s), " 2014-15 Benchmark Scores, 3-8 Single Grades"))
+  save_plot_as_pdf(p, paste0(long_labeller("subject", s), " 2015-16 Benchmark Scores, 3-8 Single Grades"))
 	
 	df.s <- subset(df, subject == s & grade %in% total.grades.nok2 & achievement.level != 'U')
   d.cr <- df.s %>% group_by(school, grade, subject, test_name) %>% do(b_and_above(.))
 	p <- multi_test_by_subjects_bar_plot(df.s, s)
-  save_plot_as_pdf(p, paste0(long_labeller("subject", s), " 2014-15 Benchmark Scores, 3-8 Small Schools"))
+  save_plot_as_pdf(p, paste0(long_labeller("subject", s), " 2015-16 Benchmark Scores, 3-8 Small Schools"))
   
 	if(s != 'soc'){
     df.s <- subset(df, subject == s & grade %in% k2.grades & achievement.level != 'U')
     d.cr <- df.s %>% group_by(school, grade, subject, test_name) %>% do(m_and_above(.))
   	p <- multi_test_by_subjects_bar_plot(df.s, s) + scale_fill_manual(values=alPalette.light.lows.k2, guide=F)
-    save_plot_as_pdf(p, paste0(long_labeller("subject", s), " 2014-15 Benchmark Scores, PK-2"))
+    save_plot_as_pdf(p, paste0(long_labeller("subject", s), " 2015-16 Benchmark Scores, PK-2"))
 	}
 }
