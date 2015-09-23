@@ -6,8 +6,12 @@ make_small_school_labels <- function(d) {
 
 make_small_school <- function(r, grade.col='grade') {
   if(r['school'] == 'SCH'){
-    gc <- cut(as.numeric(r[grade.col]), c(-5, 4, 7, 9),
-      labels=c("PK-3", "4-6", "7-8"), right=FALSE
+    gc <- cut(as.numeric(r[grade.col]), c(-5, 4, 6, 9),
+      labels=c("PK-3", "4-5", "6-8"), right=FALSE
+    )
+  }else if(r['school'] == 'MCPA'){
+    gc <- cut(as.numeric(r[grade.col]), c(-5, 3, 5, 9),
+              labels=c("PK-2", "3-4", "5-8"), right=FALSE
     )
   }else{
     gc <- cut(as.numeric(r[grade.col]), c(-5, 3, 6, 9),

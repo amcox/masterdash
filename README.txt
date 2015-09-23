@@ -48,8 +48,13 @@ First, do the steps below on the local development database.
   Any enrollments that are not successfully created will be echoed back with
   some true/false information about the source of the error. Check the import
   method to see the meaning of those.
+
+6. **Import Tests**
+
+`Test.import('csvs/tests_import.csv')`
+
   
-6. **Import Scores**
+7. **Import Scores**
 
   Take the finalized scanning report spreadsheet for an MLQ or benchmark. From
   the 'Students' tab, copy the student id, ela benchmark grade, ela average,
@@ -99,7 +104,7 @@ First, do the steps below on the local development database.
 Then, use the following commands to update the AWS database with a copy of the local version.
 
     # Drop the existing database from AWS
-    dropdb masterdash -h masterdashcurrent.cmyogvwshjn6.us-west-2.rds.amazonaws.com -p 5432 -U masteruser
+    dropdb -h masterdashcurrent.cmyogvwshjn6.us-west-2.rds.amazonaws.com -p 5432 -U masteruser masterdash
 
     # Create a new DB on AWS from a local dump
     createdb -h masterdashcurrent.cmyogvwshjn6.us-west-2.rds.amazonaws.com -p 5432 -U masteruser -T template0 masterdash

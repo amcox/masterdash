@@ -1,4 +1,4 @@
-test.order <- c('L14', 'MLQ1', 'B1', 'MLQ2', 'B2', 'MLQ3', 'MLQ4', 'B3', 'MLQ5', 'L15')
+test.order <- c('L15', 'MLQ1', 'B1', 'MLQ2', 'B2', 'MLQ3', 'MLQ4', 'B3', 'MLQ5', 'L16')
 
 alPalette <- c("A"="#00D77B", "M"="#00BE61", "B"="#198D33", "AB"="#E5E167", "U"="#D16262")
 alPalette.light.lows <- c("A"="#00D77B", "M"="#00BE61", "B"="#198D33", "AB"="#E6E5CF", "U"="#D1BCBC")
@@ -22,8 +22,8 @@ k2.grades <- c('-1', '0', '1', '2', 'PK_2')
 cr.growth.grades <- c(3, 4, 5, 6, 7, 8, "3_5", "6_8", "3_8")
 plain.grades.leap <- c("3", "4", "5", "6", "7", "8")
 
-schools <- c("RCAA", "STA", "DTA", "SCH", 'RSP', "all")
-plain.schools <- c("RCAA", "STA", "DTA", "SCH", 'RSP')
+schools <- c("RCAA", "STA", "DTA", "SCH", "MCPA", 'RSP', "all")
+plain.schools <- c("RCAA", "STA", "DTA", "SCH", "MCPA", 'RSP')
 
 subjects.order <- c("ela", "math", "sci", "soc", "all")
 plain.subjects <- c("ela", "math", "sci", "soc", "all")
