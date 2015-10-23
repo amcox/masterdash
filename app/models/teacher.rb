@@ -24,6 +24,9 @@ class Teacher < ActiveRecord::Base
       # Update other fields
       teacher.update(name: row[:teacher_name], teacher_number: row[:renew_id], active: true)
       
+      # For now, also create a teaching for the latest year. Must change for multi-year.
+      teacher.teachings.create(year: Year.last)
+      
       progressbar.increment
     end
     progressbar.finish
