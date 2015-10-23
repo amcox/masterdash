@@ -1,6 +1,7 @@
 SELECT
   s.student_number student_number,
 	sse.unique_id teacher_number,
+	u.email_addr teacher_email,
   c.course_name course_name,
   cc.section_number section,
   sch.abbreviation school,
