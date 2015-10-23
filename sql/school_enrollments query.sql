@@ -14,3 +14,5 @@ LEFT JOIN u_def_ext_students se ON se.studentsdcid = s.dcid
 LEFT JOIN terms t ON t.yearid = e.yearid AND t.portion = 1 AND t.schoolid = e.schoolid
 WHERE t.id LIKE '25%'
 AND e.grade_level < 99
+AND e.grade_level > -3
+AND e.schoolid IN (1, 2, 3, 5, 6, 7, 369701, 369999)
