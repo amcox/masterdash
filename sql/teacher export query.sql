@@ -1,6 +1,8 @@
 SELECT DISTINCT
   u.lastfirst teacher_name,
-  sse.unique_id teacher_number
+  sse.unique_id renew_ID,
+  u.email_addr,
+  u.teachernumber PS_ID
 FROM cc
 JOIN students s ON cc.studentID = s.id
 LEFT JOIN schoolstaff ss ON ss.id = cc.teacherid
@@ -12,5 +14,5 @@ JOIN schools sch ON cc.schoolid = sch.school_number
 WHERE cc.dateenrolled <= CURRENT_DATE
 AND cc.dateleft > CURRENT_DATE
 AND s.grade_level > -3
-AND sch.school_number IN (1,2,3,6,7,369701)
+AND sch.school_number IN (1,2,3,5,6,7,369701,369999)
 AND ce.instruction_type = 'Core'
