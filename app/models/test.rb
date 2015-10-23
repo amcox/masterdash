@@ -18,6 +18,9 @@ class Test < ActiveRecord::Base
       elsif row[:type] == 'map'
         test.subjects = ['ela', 'math']
         test.score_columns = ['scaled_score', 'percentile', 'ai_points', 'on_level']
+      elsif row[:type] == 'star'
+        test.subjects = ['ela','math']
+        test.score_columns = ['scaled_score', 'date', 'ge']
       end
       test.save
     end
