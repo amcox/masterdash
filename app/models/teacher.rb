@@ -13,24 +13,23 @@ class Teacher < ActiveRecord::Base
     infile = File.read(file_path)
     csv = CSV.parse(infile, {:headers => true, :header_converters => :symbol})
     headers = csv.first.headers
-    progressbar = ProgressBar.create(:title => "Student Import",
+    progressbar = ProgressBar.create(:title => "Teacher Import",
                     :starting_at => 0, :total => csv.length,
                     :format => '%e %B %p%% %t'
     )
     csv.each do |row|
-      teacher = Teacher.where(teacher_number: row[:teacher_number]).first_or_create
-      teacher.update(name: row[:teacher_name], active: true)
+      # Check for uniqueness on email
+      teacher = Teacher.where(email: row[:email_addr]).first_or_create
+      
+      # Update other fields
+      teacher.update(name: row[:teacher_name], teacher_number: row[:renew_id], active: true)
+      
       progressbar.increment
     end
     progressbar.finish
   end
   
-
  def schools_in(y)
-
  end
-
-
-
-
+ 
 end
