@@ -1,0 +1,31 @@
+<h1>Listing survey_response_strings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Text</th>
+      <th>Response value</th>
+      <th>Response type</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @survey_response_strings.each do |survey_response_string| %>
+      <tr>
+        <td><%= survey_response_string.text %></td>
+        <td><%= survey_response_string.response_value %></td>
+        <td><%= survey_response_string.response_type %></td>
+        <td><%= link_to 'Show', survey_response_string %></td>
+        <td><%= link_to 'Edit', edit_survey_response_string_path(survey_response_string) %></td>
+        <td><%= link_to 'Destroy', survey_response_string, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Survey response string', new_survey_response_string_path %>

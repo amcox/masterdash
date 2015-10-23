@@ -1,7 +1,13 @@
 class Enrollment < ActiveRecord::Base
   belongs_to :student
-  belongs_to :teacher
-  
+  has_and_belongs_to_many :teachings
+  has_many :teachers, through: :teachings
+  belongs_to :school
+  belongs_to :year
+  belongs_to :school_enrollment
+
+
+
   def self.import(file_path)
     require 'csv'
     infile = File.read(file_path)

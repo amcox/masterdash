@@ -1,0 +1,29 @@
+<%= form_for(@survey_response_string) do |f| %>
+  <% if @survey_response_string.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@survey_response_string.errors.count, "error") %> prohibited this survey_response_string from being saved:</h2>
+
+      <ul>
+      <% @survey_response_string.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :text %><br>
+    <%= f.text_area :text %>
+  </div>
+  <div class="field">
+    <%= f.label :response_value %><br>
+    <%= f.number_field :response_value %>
+  </div>
+  <div class="field">
+    <%= f.label :response_type %><br>
+    <%= f.text_area :response_type %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

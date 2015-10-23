@@ -1,0 +1,17 @@
+Compensation Model Notes
+
+For STAR SGP scores (Fall-Winter & Winter-Spring), name tests as follows:
+--> STAR_SGP_Winter
+--> STAR_SGP_Spring
+
+Scores not previously uploaded to masterdash but named as following tests:
+-ACT
+-EOC
+-STEP
+-MAP
+-STAR
+-IEP
+
+Use Enrollment_Teachings for actual co-teaching relationships (pulled from PS)
+
+For interventionists responsible for whole grades (not cohort dependent), import into enrollments

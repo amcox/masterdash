@@ -8,7 +8,7 @@ class Test < ActiveRecord::Base
     csv.each do |row|
       test = Test.find_or_create_by(name: row[:name])
       test.order = row[:order]
-      test.year = row[:year]
+    #  test.year = row[:year]
       if row[:type] == 'leap'
         test.subjects = ['ela', 'math', 'sci', 'soc']
         test.score_columns = ['scaled_score', 'achievement_level', 'ai_points', 'on_level']

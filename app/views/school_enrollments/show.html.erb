@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Student:</strong>
+  <%= @school_enrollment.student %>
+</p>
+
+<p>
+  <strong>School:</strong>
+  <%= @school_enrollment.school %>
+</p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @school_enrollment.year %>
+</p>
+
+<p>
+  <strong>Grade:</strong>
+  <%= @school_enrollment.grade %>
+</p>
+
+<p>
+  <strong>Entrydate:</strong>
+  <%= @school_enrollment.entrydate %>
+</p>
+
+<p>
+  <strong>Exitdate:</strong>
+  <%= @school_enrollment.exitdate %>
+</p>
+
+<%= link_to 'Edit', edit_school_enrollment_path(@school_enrollment) %> |
+<%= link_to 'Back', school_enrollments_path %>

@@ -1,4 +1,20 @@
 Masterdash::Application.routes.draw do
+  resources :school_enrollments
+
+  resources :survey_response_strings
+
+  resources :survey_questions
+
+  resources :survey_responses
+
+  resources :vams
+
+  resources :schools
+
+  resources :teachings
+
+  resources :years
+
   resources :observations
 
   resources :scores

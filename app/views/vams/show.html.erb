@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Subject:</strong>
+  <%= @vam.subject %>
+</p>
+
+<p>
+  <strong>Teaching:</strong>
+  <%= @vam.teaching %>
+</p>
+
+<p>
+  <strong>Percentile:</strong>
+  <%= @vam.percentile %>
+</p>
+
+<%= link_to 'Edit', edit_vam_path(@vam) %> |
+<%= link_to 'Back', vams_path %>

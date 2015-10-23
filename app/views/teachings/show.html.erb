@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Teacher:</strong>
+  <%= @teaching.teacher %>
+</p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @teaching.year %>
+</p>
+
+<p>
+  <strong>Level:</strong>
+  <%= @teaching.level %>
+</p>
+
+<p>
+  <strong>Summative rating:</strong>
+  <%= @teaching.summative_rating %>
+</p>
+
+<%= link_to 'Edit', edit_teaching_path(@teaching) %> |
+<%= link_to 'Back', teachings_path %>

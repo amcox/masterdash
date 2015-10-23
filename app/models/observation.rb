@@ -1,5 +1,6 @@
 class Observation < ActiveRecord::Base
-  belongs_to :teacher
+  belongs_to :teaching
+
   
   def self.import(file_path)
     require 'csv'

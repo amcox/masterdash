@@ -1,0 +1,29 @@
+<%= form_for(@vam) do |f| %>
+  <% if @vam.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@vam.errors.count, "error") %> prohibited this vam from being saved:</h2>
+
+      <ul>
+      <% @vam.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :subject %><br>
+    <%= f.text_area :subject %>
+  </div>
+  <div class="field">
+    <%= f.label :teaching %><br>
+    <%= f.text_field :teaching %>
+  </div>
+  <div class="field">
+    <%= f.label :percentile %><br>
+    <%= f.text_field :percentile %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
