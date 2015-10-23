@@ -19,20 +19,17 @@ class SchoolEnrollment < ActiveRecord::Base
     )
     csv.each do |row|
       student = Student.where(student_number: row[:student_number]).first
-      school = School.where(abbreviation: row[:school]).first
-      year = Year.where(ending_year: row[:ending_year]).first
+      school = School.where(abbreviation: row[:school_abb]).first
+      year = Year.where(year: row[:year]).first
 
       school_enrollment = SchoolEnrollment.create(student_id: student.id, 
-      	school_id: school.id, year_id: year.id, grade: row[:grade_level], 
+      	school_id: school.id, year_id: year.id, grade: row[:grade], 
       	entrydate: row[:entrydate], exitdate: row[:exitdate],
       	laa1: row[:laa1], la_sped: row[:la_sped]
-
       )
-   
       progressbar.increment
     end
     progressbar.finish
-    
   end
 
 end
