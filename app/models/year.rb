@@ -10,12 +10,8 @@ class Year < ActiveRecord::Base
     csv = CSV.parse(infile, {:headers => true, :header_converters => :symbol})
     
     csv.each do |row|
-      
-     
-      # year = Year.create (year: year, ending_year: ending_year)
-
+      year = Year.create(year: row[:year], ending_year: row[:ending_year])
     end
-  	
   end
 
 end
