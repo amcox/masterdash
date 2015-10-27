@@ -20,7 +20,7 @@ class Student < ActiveRecord::Base
     )
     csv.each do |row|
       student = Student.where(student_number: row[:student_number]).first_or_create
-      student.update(name: row[:name]
+      student.update(name: row[:name], gender: row[:gender], email: row[:email], uid: row[:uid], dob: row[:dob]
       )
       progressbar.increment
     end
