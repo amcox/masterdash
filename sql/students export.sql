@@ -1,9 +1,9 @@
 SELECT
   s.student_number student_number,
 	s.lastfirst name,
-  s.dob dob,
+  TO_char(s.dob, 'YYYY-MM-DD') dob,
   s.gender gender,
-  s.state_studentnumber,
+  s.state_studentnumber louisianauid,
   se.email
 FROM students s
 LEFT JOIN u_def_ext_students se ON se.studentsdcid = s.dcid
