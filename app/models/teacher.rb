@@ -9,9 +9,11 @@ class Teacher < ActiveRecord::Base
   has_many :survey_responses, through: :teachings
   
   def scores
-    self.enrollments.joins('LEFT OUTER JOIN students ON enrollments.student_id = students.id').
-    joins('LEFT OUTER JOIN scores ON scores.student_id = students.id AND scores.subject = enrollments.subject').
-    select('scores.*')
+    enrollment_ids = self.enrollments.pluck(:id)
+    Score.joins(students).joins(enrollments on enrollments.subject = score.subject AND enrollments.id IN enrollment_ids)
+   # self.enrollments.joins('LEFT OUTER JOIN students ON enrollments.student_id = students.id').
+   # joins('LEFT OUTER JOIN scores ON scores.student_id = students.id AND scores.subject = enrollments.subject').
+   # select('scores.*')
   end
 
   def self.import(file_path)
