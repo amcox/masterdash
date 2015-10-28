@@ -1,7 +1,7 @@
 SELECT
 	s.student_number student_number,
-	e.entrydate entry_date,
-	e.exitdate exit_date,
+	TO_CHAR(e.entrydate, 'YYYY-MM-DD') entry_date,
+	TO_CHAR(e.exitdate, 'YYYY-MM-DD') exit_date,
 	sc.abbreviation school_abb,
 	e.grade_level grade,
 	ps_customfields.getStudentscf(s.id, 'la_sped') la_sped,

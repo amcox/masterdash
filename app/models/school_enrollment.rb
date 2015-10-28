@@ -27,7 +27,7 @@ class SchoolEnrollment < ActiveRecord::Base
         # Create a new school_enrollment, because we earlier deleted all
         school_enrollment = SchoolEnrollment.create(student_id: student.id, 
         	school_id: school.id, year_id: year.id, grade: row[:grade], 
-        	entrydate: row[:entrydate], exitdate: row[:exitdate],
+        	entrydate: row[:entry_date], exitdate: row[:exit_date],
         	laa1: row[:laa1], la_sped: row[:la_sped]
         )
       else
