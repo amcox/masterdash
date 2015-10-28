@@ -9,8 +9,14 @@ class Teacher < ActiveRecord::Base
   has_many :survey_responses, through: :teachings
   
   def scores
-    enrollment_ids = self.enrollments.pluck(:id)
-    Score.joins(students).joins(enrollments on enrollments.subject = score.subject AND enrollments.id IN enrollment_ids)
+    Score.
+    joins("enrollments ON enrollments.student_id = scores.student_id AND enrollments.subject = scores.subject").
+    joins("enrollments_teachings ON enrollments.id = enrollments_teachings.enrollment_id").
+    joins("teachings ON enrollments_teachings.teaching_id = teachings.id").
+    joins("teachers ON teachings.teacher_id = teachers.id").
+    where("teachers.id = ?", self.id)
+      
+   # Score.joins(students).joins(enrollments on enrollments.subject = score.subject AND enrollments.id IN enrollment_ids)
    # self.enrollments.joins('LEFT OUTER JOIN students ON enrollments.student_id = students.id').
    # joins('LEFT OUTER JOIN scores ON scores.student_id = students.id AND scores.subject = enrollments.subject').
    # select('scores.*')
