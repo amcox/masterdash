@@ -5,7 +5,11 @@ class Enrollment < ActiveRecord::Base
   belongs_to :school
   belongs_to :year
   belongs_to :school_enrollment
-
+  
+  
+  def scores
+    self.student.scores.where("scores.subject = ?", self.subject) 
+  end
 
 
   def self.import(file_path)

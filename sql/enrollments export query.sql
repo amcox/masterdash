@@ -5,8 +5,8 @@ SELECT
   c.course_name course_name,
   cc.section_number section,
   sch.abbreviation school,
-  cc.dateenrolled entry_date,
-  cc.dateleft exit_date,
+  TO_CHAR(cc.dateenrolled, 'YYYY-MM-DD') entry_date,
+  TO_CHAR(cc.dateleft, 'YYYY-MM-DD') exit_date,
   CASE ce.instruction_subject
     WHEN 'ELA' THEN 'ela'
     WHEN 'Math' THEN 'math'

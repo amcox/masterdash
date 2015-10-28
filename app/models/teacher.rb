@@ -8,6 +8,12 @@ class Teacher < ActiveRecord::Base
   has_many :vams, through: :teachings
   has_many :survey_responses, through: :teachings
   
+  def scores
+    self.enrollments.joins('LEFT OUTER JOIN students ON enrollments.student_id = students.id').
+    joins('LEFT OUTER JOIN scores ON scores.student_id = students.id AND scores.subject = enrollments.subject').
+    select('scores.*')
+  end
+
   def self.import(file_path)
     require 'csv'
     infile = File.read(file_path)

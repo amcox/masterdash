@@ -12,27 +12,55 @@ class Score < ActiveRecord::Base
                     :starting_at => 0, :total => csv.length,
                     :format => '%e %B %p%% %t'
     )
-    rows_not_created = []
+    errs = []
+    saved_count = 0
     csv.each do |row|
       test = Test.where(name: row[:test]).first
-      year = Year.where(year: row[:year]).first
+      year = Year.where(ending_year: row[:year]).first
       student = Student.where(student_number: row[:student_number]).first
-      if test && student && year
+      
+      if !student.nil?
+        this_school_enrollment = student.school_enrollments.where("entrydate <= :test_import_date AND exitdate >= :test_import_date",
+          {test_import_date: row[:date]}
+        ).last
+      end
+
+      if test && student && year && this_school_enrollment
         score = Score.where(student_id: student.id, test_id: test.id, year_id: year.id, subject: row[:subject]).first_or_create
         test.score_columns.each do |column_name|
           score.send("#{column_name.to_s}=", row[column_name.to_sym])
         end
+        score.school_enrollment = this_school_enrollment
         score.save
+        saved_count += 1
       else
-        row << test.nil?
-        row << student.nil?
-        rows_not_created << row
+        row << !student.nil?
+        row << !test.nil?
+        row << !year.nil?
+        row << !this_school_enrollment.nil?
+        errs << row
       end
       progressbar.increment
     end
-    rows_not_created.each do |r|
-      progressbar.log r
-    end
+  
     progressbar.finish
+    
+    headers = csv.first.headers
+    headers_with_flags = headers + ['student?', 'test?', 'year?', 'school_enrollment?']
+    
+    if errs.any?
+      errFile ="scores_errors_#{Time.now.strftime('%F-%H%M%S')}.csv"
+      errs.insert(0, headers_with_flags)
+      errs.insert(0, ["The following #{errs.length - 1} scores were not saved due to the errors noted. #{saved_count} others were saved successfully."])
+      CSV.open("csvs/#{errFile}", "wb") do |csv|
+        errs.each do |r|
+          csv << r
+        end
+      end
+    end
+
+
+
+
   end
 end
