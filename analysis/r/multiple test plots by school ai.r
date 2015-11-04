@@ -19,14 +19,14 @@ update_functions()
 
 multi_test_by_schools_bar_plot <- function(d, s) {
   ggplot()+
-		geom_bar(data=d, aes(x=test_name, y=perc, fill=achievement.level), stat="identity")+
-    geom_text(data=d.cr, aes(label=round(perc.cr * 100, digits=0), x=test_name, y=perc.cr + .03), size=2)+
+		geom_bar(data=d, aes(x=test_name, y=ai), fill="purple", stat="identity")+
+    geom_text(data=d, aes(label=round(ai, digits=0), x=test_name, y=ai + 7), size=2)+
 		scale_x_discrete(limits=test.order)+
-		scale_y_continuous(labels=percent, breaks=seq(0,1,.1), limits=c(0,1.05))+
-		scale_fill_manual(values=alPalette.light.lows, guide=F)+
-		labs(title=paste0(long_labeller("school", s), " 2014-15 Benchmark Scores by Subject and Grade"),
+		scale_y_continuous(breaks=seq(0,150,20), limits=c(0,150))+
+#		scale_fill_manual(values=alPalette.light.lows, guide=F)+
+		labs(title=paste0(long_labeller("school", s), " 2015-16 Benchmark Scores by Subject and Grade, AI"),
       x='Assessment',
-      y='Percent of Scores'
+      y='Assessment Index'
     )+
 		facet_grid(subject ~ grade, labeller=short_labeller)+
 		theme_bw()+
@@ -36,21 +36,24 @@ multi_test_by_schools_bar_plot <- function(d, s) {
 }
 
 con <- prepare_connection()
-df <- create_student_school_scores_roll_up(con)
+df <- create_student_school_scores_roll_up_ai(con)
+
+df <- subset(df, school != "RSP")
+df$school <- reorder(df$school, new.order=schools)
 
 for (s in schools){
-  df.s <- subset(df, school == s & grade %in% plain.grades.nok2 & achievement.level != 'U')
-  d.cr <- df.s %>% group_by(school, grade, subject, test_name) %>% do(b_and_above(.))
+  df.s <- subset(df, school == s & grade %in% plain.grades.nok2 )
+ # d.cr <- df.s %>% group_by(school, grade, subject, test_name) %>% do(b_and_above(.))
 	p <- multi_test_by_schools_bar_plot(df.s, s)
-  save_plot_as_pdf(p, paste0(long_labeller("school", s), " 2014-15 Benchmark Scores, 3-8 Single Grades"))
+  save_plot_as_pdf(p, paste0(long_labeller("school", s), " 2015-16 Benchmark Scores AI, 3-8 Single Grades"))
 	
-	df.s <- subset(df, school == s & grade %in% total.grades.nok2 & achievement.level != 'U')
-  d.cr <- df.s %>% group_by(school, grade, subject, test_name) %>% do(b_and_above(.))
+	df.s <- subset(df, school == s & grade %in% total.grades.nok2 )
+#  d.cr <- df.s %>% group_by(school, grade, subject, test_name) %>% do(b_and_above(.))
 	p <- multi_test_by_schools_bar_plot(df.s, s)
-  save_plot_as_pdf(p, paste0(long_labeller("school", s), " 2014-15 Benchmark Scores, 3-8 Small Schools"))
+  save_plot_as_pdf(p, paste0(long_labeller("school", s), " 2015-16 Benchmark Scores AI, 3-8 Small Schools"))
   
-	df.s <- subset(df, school == s & grade %in% k2.grades & achievement.level != 'U')
-  d.cr <- df.s %>% group_by(school, grade, subject, test_name) %>% do(m_and_above(.))
+	df.s <- subset(df, school == s & grade %in% k2.grades)
+ # d.cr <- df.s %>% group_by(school, grade, subject, test_name) %>% do(m_and_above(.))
 	p <- multi_test_by_schools_bar_plot(df.s, s) + scale_fill_manual(values=alPalette.light.lows.k2, guide=F)
-  save_plot_as_pdf(p, paste0(long_labeller("school", s), " 2014-15 Benchmark Scores, PK-2"))
+  save_plot_as_pdf(p, paste0(long_labeller("school", s), " 2015-16 Benchmark Scores AI, PK-2"))
 }

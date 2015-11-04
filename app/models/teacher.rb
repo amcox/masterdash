@@ -10,10 +10,10 @@ class Teacher < ActiveRecord::Base
   
   def scores
     Score.
-    joins("enrollments ON enrollments.student_id = scores.student_id AND enrollments.subject = scores.subject").
-    joins("enrollments_teachings ON enrollments.id = enrollments_teachings.enrollment_id").
-    joins("teachings ON enrollments_teachings.teaching_id = teachings.id").
-    joins("teachers ON teachings.teacher_id = teachers.id").
+    joins("INNER JOIN enrollments ON enrollments.student_id = scores.student_id AND enrollments.subject = scores.subject").
+    joins("INNER JOIN enrollments_teachings ON enrollments.id = enrollments_teachings.enrollment_id").
+    joins("INNER JOIN teachings ON enrollments_teachings.teaching_id = teachings.id").
+    joins("INNER JOIN teachers ON teachings.teacher_id = teachers.id").
     where("teachers.id = ?", self.id)
       
    # Score.joins(students).joins(enrollments on enrollments.subject = score.subject AND enrollments.id IN enrollment_ids)

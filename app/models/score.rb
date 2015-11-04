@@ -26,7 +26,7 @@ class Score < ActiveRecord::Base
       end
 
       if test && student && year && this_school_enrollment
-        score = Score.where(student_id: student.id, test_id: test.id, year_id: year.id, subject: row[:subject]).first_or_create
+        score = Score.where(student_id: student.id, test_id: test.id, year_id: year.id, subject: row[:subject], grade: row[:grade]).first_or_create
         test.score_columns.each do |column_name|
           score.send("#{column_name.to_s}=", row[column_name.to_sym])
         end
