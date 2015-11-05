@@ -55,7 +55,7 @@ for (s in subjects.order){
 	if(s != 'soc'){
     df.s <- subset(df, subject == s & grade %in% k2.grades)
    # d.cr <- df.s %>% group_by(school, grade, subject, test_name) %>% do(m_and_above(.))
-  	p <- multi_test_by_subjects_bar_plot(df.s, s) + scale_fill_manual(values=alPalette.light.lows.k2, guide=F)
+  	p <- multi_test_by_subjects_bar_plot_ai(df.s, s) + scale_fill_manual(values=alPalette.light.lows.k2, guide=F)
     save_plot_as_pdf(p, paste0(long_labeller("subject", s), " 2015-16 Benchmark Scores AI, PK-2"))
 	}
 }

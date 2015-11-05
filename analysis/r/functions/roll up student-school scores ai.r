@@ -1,6 +1,7 @@
-create_student_school_scores_roll_up_ai <- function(con) {
+create_student_school_scores_roll_up_ai <- function(con, y=2016) {
   # Get scores
   df <- get_single_score_per_student_with_student_data(con)
+	df <- df %>% subset(ending_year == y)
   df$grade.category <- cut_grade_categories(df$grade)
   df$small.school <- make_small_school_labels(df)
   df <- subset(df, !achievement_level %in% c("WTS", "MS", "ES"))

@@ -75,28 +75,22 @@ get_school_scores_enrollments_data <- function(con=NA) {
 get_single_score_per_student_with_student_data <- function(con=NA) {
   # This returns one score per student-school-subject-test
   # without section information, with student ID
-  q <- "SELECT s.*,
-  		e.grade grade,
-  		e.school school,
-  		tests.name test_name,
-  		tests.order test_order,
-      st.student_number student_number,
-			st.name student_name
-  FROM (
-  	SELECT student_id,
-  		subject,
-  		school,
-  		MAX(grade) grade,
-  		year
-  	FROM enrollments
-    WHERE class_type = 'Core'
-  	GROUP BY student_id, subject, school, year
-  ) e
-  JOIN scores s ON s.student_id = e.student_id AND e.subject = s.subject
-  JOIN tests ON tests.id = s.test_id
-  JOIN students st ON st.id = s.student_id"
-  
-  return(dbGetQuery(con, q))
+  q <- "SELECT
+	s.*,
+	s.grade grade,
+	sch.abbreviation school,
+	t.name test_name,
+	t.order test_order,
+	st.student_number student_number,
+	st.name student_name,
+	y.ending_year
+FROM scores s
+JOIN students st ON s.student_id = st.id
+JOIN tests t ON s.test_id = t.id
+JOIN years y ON s.year_id = y.id
+JOIN school_enrollments se ON s.school_enrollment_id = se.id
+JOIN schools sch ON se.school_id = sch.id"	
+	return(dbGetQuery(con, q))
 }
 
 get_enrollments_data <- function(con=NA){
