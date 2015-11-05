@@ -36,7 +36,7 @@ df <- load_all_from_raw()
 d <- df %>% gather(subject, percent, ela:soc, na.rm=T)
 d <- d %>% group_by(grade) %>% mutate(achievement_level=cut_al(percent))
 d <- data.frame(d)
-d <- select(d, -grade)
+# d <- select(d, -grade)
 d$scaled_score <- rep(NA, nrow(d))
 
 # Load and process data from LEAP tests
@@ -49,7 +49,7 @@ dl$percent <- rep(NA, nrow(dl))
 
 # Put together and add columns
 db <- rbind(d, dl)
-db$year <- rep('2015', nrow(db))
+db$year <- rep('2016', nrow(db))
 db <- merge(db, ai.points)
 db <- db %>% mutate(on_level = ai_points > 0)
 
