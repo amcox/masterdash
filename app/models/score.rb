@@ -63,4 +63,23 @@ class Score < ActiveRecord::Base
 
 
   end
+  
+  def self.calculate_ai(these_scores)
+    ai_array = these_scores.to_a.map{|s| s.ai_points }
+    if ai_array.size > 0
+      ai_array.inject(:+).to_i / ai_array.size
+    else
+      nil
+    end
+  end
+  
+  def self.calculate_ai_by_test(these_scores)
+    grouped_scores = these_scores.group_by{|s| s.test.name }
+    grouped_scores.transform_values{|group_of_scores| Score.calculate_ai(group_of_scores)}
+  end
+  
+  def self.network_ai_by_test(subjects)
+    
+  end
+  
 end

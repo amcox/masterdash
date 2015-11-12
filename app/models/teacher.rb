@@ -14,19 +14,31 @@ class Teacher < ActiveRecord::Base
     joins("INNER JOIN instructings ON enrollments.id = instructings.enrollment_id").
     joins("INNER JOIN teachings ON instructings.teaching_id = teachings.id").
     joins("INNER JOIN teachers ON teachings.teacher_id = teachers.id").
+    joins("INNER JOIN tests ON scores.test_id = tests.id").
     where("teachers.id = ?", self.id)
   end
 
   def scores_fay
-
     self.scores.where("teachings.start_date <= to_date('2015-10-01') AND 
       teachings.end_date >= to_date('2016-05-01')")
-   #TO-DO: Hard-coded for 15-16; to use multiple years add fay_start and fay_end to years
-   #Then add years join to scores SQL query above 
+    #TO-DO: Hard-coded for 15-16; to use multiple years add fay_start and fay_end to years
+    #Then add years join to scores SQL query above 
   end
 
-  def bench_scores
-    self.scores.where("")
+  def scores_with_ai
+    self.scores.where("scores.ai_points IS NOT NULL").includes(:test)
+  end
+  
+  def ai_by_test
+    Score.calculate_ai_by_test(self.scores_with_ai)
+  end
+  
+  def network_comparison_ai_by_test
+    network_scores = self.scores_with_ai.map{|s| {grade: s.grade, subject: s.subject}}.uniq.map do |combo|
+     Score.where("grade = ? AND subject = ? AND ai_points IS NOT NULL", combo[:grade], combo[:subject]).includes(:test)
+    end
+    network_scores.flatten!
+    Score.calculate_ai_by_test(network_scores)
   end
 
   def self.import(file_path)

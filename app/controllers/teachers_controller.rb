@@ -10,7 +10,8 @@ class TeachersController < ApplicationController
   # GET /teachers/1
   # GET /teachers/1.json
   def show
-    @bench_scores = @teacher.
+    @ai_by_test_hash = @teacher.ai_by_test
+    @network_ai_by_test_hash = @teacher.network_comparison_ai_by_test
   end
 
   # GET /teachers/new
