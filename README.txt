@@ -70,6 +70,8 @@ First, do the steps below on the local development database.
   'raw' directory with the 'leap.csv' file, format the data for import, and save
   to the 'csvs' directory as 'scores\_import.csv'. No modification is needed.
   
+  Scores must now have dates and grade
+
   Run the scores import method.
   
     `Score.import('csvs/scores_import.csv')`
@@ -112,5 +114,9 @@ Then, use the following commands to update the AWS database with a copy of the l
     # Pipe local data onto the AWS server
     # (might need to change the hostname for the local db)
     pg_dump -d masterdash_development -h /var/pgsql_socket | psql -h masterdashcurrent.cmyogvwshjn6.us-west-2.rds.amazonaws.com -p 5432 -U masteruser -d masterdash
+
+    Split pipe 
+    Add -U sumeet, -f filename to first part
+    Add < filename to second
     
 The analysis can be run from either db, using an option in the create connection function, `prepare_connection(aws=T)`. If using AWS, manually set the variable 'aws.password' in R to be the AWS password before running analysis code.

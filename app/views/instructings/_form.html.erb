@@ -1,0 +1,37 @@
+<%= form_for(@instructing) do |f| %>
+  <% if @instructing.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@instructing.errors.count, "error") %> prohibited this instructing from being saved:</h2>
+
+      <ul>
+      <% @instructing.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :enrollment %><br>
+    <%= f.text_field :enrollment %>
+  </div>
+  <div class="field">
+    <%= f.label :teaching %><br>
+    <%= f.text_field :teaching %>
+  </div>
+  <div class="field">
+    <%= f.label :start_date %><br>
+    <%= f.date_select :start_date %>
+  </div>
+  <div class="field">
+    <%= f.label :end_date %><br>
+    <%= f.date_select :end_date %>
+  </div>
+  <div class="field">
+    <%= f.label :lead %><br>
+    <%= f.check_box :lead %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

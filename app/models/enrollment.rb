@@ -1,6 +1,7 @@
 class Enrollment < ActiveRecord::Base
   belongs_to :student
-  has_and_belongs_to_many :teachings
+  has_many :instructings
+  has_many :teachings, through: :instructings
   has_many :teachers, through: :teachings
   belongs_to :school
   belongs_to :year
@@ -43,7 +44,9 @@ class Enrollment < ActiveRecord::Base
           entry: row[:entry_date], exit: row[:exit_date], cohort: row[:cohort],
           year: year, school: school, school_enrollment: school_enrollment
         )
-        teaching.enrollments << enrollment
+        instructing = Instructing.where(teaching_id: teaching.id, enrollment_id: enrollment.id).first_or_create
+        #teaching.enrollments << enrollment
+        #TO-DO Create instructings import method (with co-teacher info and dates) and remove teacher assignment here
         saved_count += 1
       else
         row << !student.nil?
@@ -61,7 +64,7 @@ class Enrollment < ActiveRecord::Base
     headers_with_flags = headers + ['student?', 'teacher?', 'year?', 'teaching?', 'school?', 'school_enrollment?']
     
     if errs.any?
-      errFile ="enrollments_errors_#{Date.today.strftime('%d%b%y')}.csv"
+      errFile ="enrollments_errors_#{Time.now.strftime('%F-%H%M%S')}.csv"
       errs.insert(0, headers_with_flags)
       errs.insert(0, ["The following #{errs.length - 1} enrollments were not saved due to the errors noted. #{saved_count} others were saved successfully."])
       CSV.open("csvs/#{errFile}", "wb") do |csv|

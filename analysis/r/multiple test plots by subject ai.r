@@ -2,7 +2,6 @@
 # subject, showing schools as bars.
 
 library(dplyr)
-library(dplyr)
 library(gdata)
 library(reshape2)
 library(ggplot2)

@@ -1,0 +1,35 @@
+<h1>Listing instructings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Enrollment</th>
+      <th>Teaching</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>Lead</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @instructings.each do |instructing| %>
+      <tr>
+        <td><%= instructing.enrollment %></td>
+        <td><%= instructing.teaching %></td>
+        <td><%= instructing.start_date %></td>
+        <td><%= instructing.end_date %></td>
+        <td><%= instructing.lead %></td>
+        <td><%= link_to 'Show', instructing %></td>
+        <td><%= link_to 'Edit', edit_instructing_path(instructing) %></td>
+        <td><%= link_to 'Destroy', instructing, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Instructing', new_instructing_path %>

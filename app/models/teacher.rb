@@ -11,15 +11,22 @@ class Teacher < ActiveRecord::Base
   def scores
     Score.
     joins("INNER JOIN enrollments ON enrollments.student_id = scores.student_id AND enrollments.subject = scores.subject").
-    joins("INNER JOIN enrollments_teachings ON enrollments.id = enrollments_teachings.enrollment_id").
-    joins("INNER JOIN teachings ON enrollments_teachings.teaching_id = teachings.id").
+    joins("INNER JOIN instructings ON enrollments.id = instructings.enrollment_id").
+    joins("INNER JOIN teachings ON instructings.teaching_id = teachings.id").
     joins("INNER JOIN teachers ON teachings.teacher_id = teachers.id").
     where("teachers.id = ?", self.id)
-      
-   # Score.joins(students).joins(enrollments on enrollments.subject = score.subject AND enrollments.id IN enrollment_ids)
-   # self.enrollments.joins('LEFT OUTER JOIN students ON enrollments.student_id = students.id').
-   # joins('LEFT OUTER JOIN scores ON scores.student_id = students.id AND scores.subject = enrollments.subject').
-   # select('scores.*')
+  end
+
+  def scores_fay
+
+    self.scores.where("teachings.start_date <= to_date('2015-10-01') AND 
+      teachings.end_date >= to_date('2016-05-01')")
+   #TO-DO: Hard-coded for 15-16; to use multiple years add fay_start and fay_end to years
+   #Then add years join to scores SQL query above 
+  end
+
+  def bench_scores
+    self.scores.where("")
   end
 
   def self.import(file_path)

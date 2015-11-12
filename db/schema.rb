@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151027172730) do
+ActiveRecord::Schema.define(version: 20151112201402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,13 +37,18 @@ ActiveRecord::Schema.define(version: 20151027172730) do
 
   add_index "enrollments", ["student_id"], name: "index_enrollments_on_student_id", using: :btree
 
-  create_table "enrollments_teachings", id: false, force: true do |t|
-    t.integer "enrollment_id"
-    t.integer "teaching_id"
+  create_table "instructings", force: true do |t|
+    t.integer  "enrollment_id"
+    t.integer  "teaching_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.boolean  "lead"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "enrollments_teachings", ["enrollment_id"], name: "index_enrollments_teachings_on_enrollment_id", using: :btree
-  add_index "enrollments_teachings", ["teaching_id"], name: "index_enrollments_teachings_on_teaching_id", using: :btree
+  add_index "instructings", ["enrollment_id"], name: "index_instructings_on_enrollment_id", using: :btree
+  add_index "instructings", ["teaching_id"], name: "index_instructings_on_teaching_id", using: :btree
 
   create_table "observations", force: true do |t|
     t.decimal  "score"

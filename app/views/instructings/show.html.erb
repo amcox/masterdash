@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Enrollment:</strong>
+  <%= @instructing.enrollment %>
+</p>
+
+<p>
+  <strong>Teaching:</strong>
+  <%= @instructing.teaching %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @instructing.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @instructing.end_date %>
+</p>
+
+<p>
+  <strong>Lead:</strong>
+  <%= @instructing.lead %>
+</p>
+
+<%= link_to 'Edit', edit_instructing_path(@instructing) %> |
+<%= link_to 'Back', instructings_path %>
