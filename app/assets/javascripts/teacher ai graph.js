@@ -1,20 +1,18 @@
-function courseGraph(data){
-	var w = 1200,
-	    h = 300;
+function createTeacherAIGraph(data){
+	var w = 800,
+	    h = 600;
 			pl = 40,
 			pt = 30,
 			pb = 110,
-			pr = 200,
-			rmin = 2,
-			rmax = 12;
+			pr = 200;
 	
 	var yScale = d3.scale.linear()
-	    .domain([0, 1])
+	    .domain([0, 150])
 	    .range([h, 0]);
 	
 	var dom = [getDate("2013-07-01"), getDate("2014-06-30")]
-	var xScale = d3.time.scale()
-	    .domain(dom)
+	var xScale = d3.scale().ordinal()
+	    .domain(["MLQ1", "MLQ2", "B1", "MLQ3", "MLQ4", "B2", "MLQ5", "B3"])
 	    .range([0, w]);
 	
 	var rScale = d3.scale.linear()
