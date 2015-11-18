@@ -47,6 +47,8 @@ gem 'google_drive'
 
 gem 'ruby-progressbar'
 
+gem 'tzinfo-data'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
