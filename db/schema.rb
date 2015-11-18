@@ -16,18 +16,18 @@ ActiveRecord::Schema.define(version: 20151112201402) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "enrollments", force: true do |t|
+  create_table "enrollments", force: :cascade do |t|
     t.integer  "student_id"
-    t.string   "subject"
+    t.string   "subject",              limit: 255
     t.boolean  "current"
     t.boolean  "fay"
-    t.string   "section"
-    t.string   "class_type"
+    t.string   "section",              limit: 255
+    t.string   "class_type",           limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "entry"
     t.date     "exit"
-    t.string   "cohort"
+    t.string   "cohort",               limit: 255
     t.decimal  "credit_potential"
     t.decimal  "credit_earned"
     t.integer  "year_id"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20151112201402) do
 
   add_index "enrollments", ["student_id"], name: "index_enrollments_on_student_id", using: :btree
 
-  create_table "instructings", force: true do |t|
+  create_table "instructings", force: :cascade do |t|
     t.integer  "enrollment_id"
     t.integer  "teaching_id"
     t.date     "start_date"
@@ -50,18 +50,18 @@ ActiveRecord::Schema.define(version: 20151112201402) do
   add_index "instructings", ["enrollment_id"], name: "index_instructings_on_enrollment_id", using: :btree
   add_index "instructings", ["teaching_id"], name: "index_instructings_on_teaching_id", using: :btree
 
-  create_table "observations", force: true do |t|
+  create_table "observations", force: :cascade do |t|
     t.decimal  "score"
     t.date     "date"
-    t.string   "observer"
+    t.string   "observer",     limit: 255
     t.integer  "quarter"
-    t.string   "small_school"
+    t.string   "small_school", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "teaching_id"
   end
 
-  create_table "school_enrollments", force: true do |t|
+  create_table "school_enrollments", force: :cascade do |t|
     t.integer  "student_id"
     t.integer  "school_id"
     t.integer  "year_id"
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 20151112201402) do
   add_index "school_enrollments", ["student_id"], name: "index_school_enrollments_on_student_id", using: :btree
   add_index "school_enrollments", ["year_id"], name: "index_school_enrollments_on_year_id", using: :btree
 
-  create_table "schools", force: true do |t|
+  create_table "schools", force: :cascade do |t|
     t.text     "name"
     t.text     "abbreviation"
     t.integer  "state_id"
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 20151112201402) do
     t.datetime "updated_at"
   end
 
-  create_table "schools_teachings", id: false, force: true do |t|
+  create_table "schools_teachings", id: false, force: :cascade do |t|
     t.integer "school_id"
     t.integer "teaching_id"
   end
@@ -95,10 +95,10 @@ ActiveRecord::Schema.define(version: 20151112201402) do
   add_index "schools_teachings", ["school_id"], name: "index_schools_teachings_on_school_id", using: :btree
   add_index "schools_teachings", ["teaching_id"], name: "index_schools_teachings_on_teaching_id", using: :btree
 
-  create_table "scores", force: true do |t|
+  create_table "scores", force: :cascade do |t|
     t.integer  "student_id"
-    t.string   "subject"
-    t.string   "achievement_level"
+    t.string   "subject",              limit: 255
+    t.string   "achievement_level",    limit: 255
     t.integer  "ai_points"
     t.integer  "scaled_score"
     t.decimal  "percentile"
@@ -125,9 +125,9 @@ ActiveRecord::Schema.define(version: 20151112201402) do
 
   add_index "scores", ["student_id"], name: "index_scores_on_student_id", using: :btree
 
-  create_table "students", force: true do |t|
+  create_table "students", force: :cascade do |t|
     t.integer  "student_number"
-    t.string   "name"
+    t.string   "name",           limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email"
@@ -136,7 +136,7 @@ ActiveRecord::Schema.define(version: 20151112201402) do
     t.string   "gender"
   end
 
-  create_table "survey_questions", force: true do |t|
+  create_table "survey_questions", force: :cascade do |t|
     t.text     "text"
     t.text     "survey_type"
     t.text     "response_type"
@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(version: 20151112201402) do
     t.datetime "updated_at"
   end
 
-  create_table "survey_response_strings", force: true do |t|
+  create_table "survey_response_strings", force: :cascade do |t|
     t.text     "text"
     t.integer  "response_value"
     t.text     "response_type"
@@ -152,7 +152,7 @@ ActiveRecord::Schema.define(version: 20151112201402) do
     t.datetime "updated_at"
   end
 
-  create_table "survey_responses", force: true do |t|
+  create_table "survey_responses", force: :cascade do |t|
     t.integer  "survey_questions_id"
     t.integer  "response_value"
     t.integer  "enrollments_id"
@@ -163,19 +163,19 @@ ActiveRecord::Schema.define(version: 20151112201402) do
   add_index "survey_responses", ["enrollments_id"], name: "index_survey_responses_on_enrollments_id", using: :btree
   add_index "survey_responses", ["survey_questions_id"], name: "index_survey_responses_on_survey_questions_id", using: :btree
 
-  create_table "teachers", force: true do |t|
-    t.string   "teacher_number"
-    t.string   "name"
+  create_table "teachers", force: :cascade do |t|
+    t.string   "teacher_number", limit: 255
+    t.string   "name",           limit: 255
     t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "email"
+    t.string   "email",          limit: 255
   end
 
-  create_table "teachings", force: true do |t|
+  create_table "teachings", force: :cascade do |t|
     t.integer  "teacher_id"
     t.integer  "year_id"
-    t.string   "level"
+    t.string   "level",            limit: 255
     t.decimal  "summative_rating"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -184,16 +184,16 @@ ActiveRecord::Schema.define(version: 20151112201402) do
   add_index "teachings", ["teacher_id"], name: "index_teachings_on_teacher_id", using: :btree
   add_index "teachings", ["year_id"], name: "index_teachings_on_year_id", using: :btree
 
-  create_table "tests", force: true do |t|
-    t.string   "name"
-    t.string   "subjects",      default: [], array: true
-    t.string   "score_columns", default: [], array: true
+  create_table "tests", force: :cascade do |t|
+    t.string   "name",          limit: 255
+    t.string   "subjects",      limit: 255, default: [], array: true
+    t.string   "score_columns", limit: 255, default: [], array: true
     t.integer  "order"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "vams", force: true do |t|
+  create_table "vams", force: :cascade do |t|
     t.text     "subject"
     t.integer  "teaching_id"
     t.decimal  "percentile"
@@ -203,7 +203,7 @@ ActiveRecord::Schema.define(version: 20151112201402) do
 
   add_index "vams", ["teaching_id"], name: "index_vams_on_teaching_id", using: :btree
 
-  create_table "years", force: true do |t|
+  create_table "years", force: :cascade do |t|
     t.text     "year"
     t.integer  "ending_year"
     t.datetime "created_at"

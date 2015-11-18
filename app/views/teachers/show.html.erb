@@ -40,6 +40,8 @@
 
 </div>
 
+<% json_path = "\"#{@teacher.id}.json\"".html_safe %>
+<div id="teacher_ai_graph" data-json_path=<%= json_path %>></div>
 
 
 <%= link_to 'Edit', edit_teacher_path(@teacher) %> |

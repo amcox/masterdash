@@ -1,1 +1,2 @@
-json.extract! @teacher, :id, :teacher_number, :name, :active, :created_at, :updated_at
+json.network_data @teacher.network_comparison_ai_by_test
+json.teacher_data @teacher.ai_by_test

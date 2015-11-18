@@ -67,6 +67,8 @@ GEM
       sass (~> 3.2.19)
     compass-rails (2.0.0)
       compass (>= 0.12.2)
+    d3_rails (3.5.6)
+      railties (>= 3.1.0)
     erubis (2.7.0)
     execjs (2.6.0)
     extlib (0.9.16)
@@ -228,6 +230,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
   compass-rails
+  d3_rails
   google_drive
   haml
   jbuilder (~> 1.2)
