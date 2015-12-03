@@ -26,7 +26,7 @@ class Teacher < ActiveRecord::Base
   end
 
   def scores_with_ai
-    self.scores.where("scores.ai_points IS NOT NULL").includes(:test)
+    self.scores.where("scores.ai_points IS NOT NULL").includes(:test).sort_by{ |s| s.test.order }
   end
   
   def ai_by_test

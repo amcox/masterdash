@@ -1,3 +1,29 @@
 // Place all the styles related to the Teachers controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: auto;
+  padding-top: 40px;
+  position: relative;
+  width: 960px;
+}
+
+button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.bullet { font: 10px sans-serif; }
+.bullet .marker { stroke: blueviolet; stroke-width: 5px; }
+.bullet .tick line { stroke: #666; stroke-width: .5px; }
+.bullet .range.s0 { fill: chartreuse; }
+.bullet .range.s1 { fill: lightgreen; }
+.bullet .range.s2 { fill: wheat; }
+.bullet .range.s3 { fill: darksalmon; }
+.bullet .measure.s0 { fill: blueviolet; }
+.bullet .measure.s1 { fill: blueviolet; }
+.bullet .title { font-size: 14px; font-weight: bold; }
+.bullet .subtitle { fill: #999; }

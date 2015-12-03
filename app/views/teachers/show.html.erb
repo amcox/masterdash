@@ -1,48 +1,30 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Teacher number:</strong>
-  <%= @teacher.teacher_number %>
-</p>
-
-<p>
+<h5>
   <strong>Name:</strong>
   <%= @teacher.name %>
-</p>
+</h5>
 
-<p>
-  <strong>Active:</strong>
-  <%= @teacher.active %>
-</p>
+<h5>
+  <strong>Email:</strong>
+  <%= @teacher.email %>
+</h5>
 
+<h5>
+  <strong>Level:</strong>
+  <%= @teacher.teachings.last.level %>
+</h5>
 
-<div>
-	<h2>Benchmark AI</h2>
+<h5>
+  <strong>Summative Rating:</strong>
+  <%= @teacher.teachings.last.summative_rating %>
+</h5>
 
-	<table>
-		<thead>
-			<tr> 
-				<th>Subject</th>
-				<th>MLQ1</th>
-				<th>MLQ2</th>
-				<th>BM1</th>
-			</tr> 
-		</thead>
-		<tbody>
-			<tr>
-				<td>Math</td>
-				
-			</tr>
-		</tbody>
-	</table>
-
-
-
-</div>
 
 <% json_path = "\"#{@teacher.id}.json\"".html_safe %>
 <div id="teacher_ai_graph" data-json_path=<%= json_path %>></div>
 
+<div id="teacher_bullet_graph" data-json_path=<%= json_path %>></div>
 
 <%= link_to 'Edit', edit_teacher_path(@teacher) %> |
 <%= link_to 'Back', teachers_path %>
