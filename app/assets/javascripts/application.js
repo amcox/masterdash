@@ -12,8 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
 //= require d3.js
+//= require_tree .
 //= require plotly-latest.min.js
 //= require bullet.js
-//= require d3.min.js

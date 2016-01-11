@@ -16,20 +16,21 @@ $(document).ready(function() {
 
 function createTeacherBulletGraph() {
 	var json_path = $("div#teacher_bullet_graph").attr("data-json_path");
-	d3.json(json_path, function(error, returned_json) {
+	d3.json(json_path, function(error, data) {
 	  if (error) return console.warn(error);
-	  console.log("In teacher bullet graph")
-	  });
+	  console.log("In teacher bullet graph");
+	  data = [data];
+	  console.log(data);
 
 	var margin = {top: 5, right: 40, bottom: 20, left: 120},
     width = 960 - margin.left - margin.right,
     height = 50 - margin.top - margin.bottom;
 
-	var chart = d3.bullet()
+	var chart = d3bullet()
     .width(width)
     .height(height);
 	  
-    var svg = d3.select("body").selectAll("svg")
+    var svg = d3.select("div#teacher_bullet_graph").selectAll("svg")
       .data(data)
     .enter().append("svg")
       .attr("class", "bullet")
@@ -52,8 +53,9 @@ function createTeacherBulletGraph() {
       .attr("dy", "1em")
       .text(function(d) { return d.subtitle; });
 
-	  NewTeacherBulletGraph(returned_json);
-};
+//	  NewTeacherBulletGraph(returned_json);
+}
+)};
 
 $(document).ready(function() {
 	if ($("div#teacher_bullet_graph").length > 0) {

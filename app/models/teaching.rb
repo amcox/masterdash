@@ -8,4 +8,14 @@ class Teaching < ActiveRecord::Base
   has_many :vams
   has_many :survey_responses, through: :enrollments
 
+
+
+
+	def schools_from_enrollments
+    	school_ids = self.enrollments.map{|e| e.school_id}.uniq
+    	School.find(school_ids)
+	end
+
+
+
 end

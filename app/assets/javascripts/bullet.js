@@ -1,9 +1,12 @@
-(function() {
+
 
 // Chart design based on the recommendations of Stephen Few. Implementation
 // based on the work of Clint Ivy, Jamie Love, and Jason Davies.
 // http://projects.instantcognition.com/protovis/bulletchart/
-d3.bullet = function() {
+
+console.log("bullet.js loaded");
+
+d3bullet = function() {
   var orient = "left", // TODO top & bottom
       reverse = false,
       duration = 0,
@@ -237,6 +240,4 @@ function bulletWidth(x) {
     return Math.abs(x(d) - x0);
   };
 }
-
-})();
 

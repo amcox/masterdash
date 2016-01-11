@@ -65,7 +65,9 @@ class Teacher < ActiveRecord::Base
     progressbar.finish
   end
   
- def schools_in(y)
- end
- 
+  def schools_from_enrollments
+    #relies on first teaching- fix to pass in year (after fixing teaching import method)
+    self.teachings.first.schools_from_enrollments
+  end      
+
 end
